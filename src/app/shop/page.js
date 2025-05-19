@@ -585,15 +585,17 @@ const page = () => {
                 >
                   {/* product card code */}
                   <div>
-                    <img
-                      src={product.image}
-                      alt={product.description}
-                      className="product-img"
-                    />
-                    <p className="category1 mb-0">{product.category}</p>
+                    <div className="shop-product-img">
+                      <img src={product.image} alt={product.description} className="product-img"  />
+                    </div>
+
+
+                    <div className="inner-product">
+
+                      <p className="category1 mb-0">{product.category}</p>
                     <p className="description">{product.description}</p>
 
-                    <div className="product-rating d-flex gap-1">
+                    <div className="product-rating d-flex align-items-center gap-1">
                       <img
                         src="https://cdn-icons-png.flaticon.com/128/2107/2107957.png"
                         className="rate2"
@@ -614,14 +616,13 @@ const page = () => {
                         src="https://cdn-icons-png.flaticon.com/128/2107/2107737.png"
                         className="rate2"
                       ></img>
-                      <p className="">4.4(4)</p>
+                      <p className="mb-0">4.4(4)</p>
                     </div>
 
                     <div className="shop-wishlist-icon">
                       <img src="https://cdn-icons-png.flaticon.com/128/13369/13369080.png" />
                     </div>
-                  </div>
-                  <div>
+                  
                     <div className="price d-flex gap-1">
                       <p className="shop-price2 fw-bold ">₹{product.price2}</p>
                       <p className="shop-price1 text-muted text-decoration-line-through">
@@ -629,6 +630,8 @@ const page = () => {
                       </p>
                     </div>
                     <button className="shop-addCart-btn">+ Add to Cart</button>
+                       </div>
+
                   </div>
                 </div>
               ))}

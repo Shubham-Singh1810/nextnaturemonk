@@ -3,7 +3,7 @@ import React from "react";
 const ShopFromFarm = () => {
   return (
     <>
-      <div className="from-farm d-flex flex-column align-items-center pb-5">
+      <div className="from-farm d-flex flex-column align-items-center">
         <h2 className="farm-h">Our Shop</h2>
         <h1>From our Farm</h1>
         <div className="Farm-Products ">
@@ -26,8 +26,9 @@ const ShopFromFarm = () => {
                     <p className="price1">300.00</p>
                     <p className="price2">299.00</p>
                   </div>
-                  <button className="add-to-cart">Add to Cart</button>
+                  <button className="add-to-cart">Add to Cart + </button>
                 </div>
+                
               </div>
             </div>
 
@@ -48,7 +49,7 @@ const ShopFromFarm = () => {
                     <p className="price1">300.00</p>
                     <p className="price2">299.00</p>
                   </div>
-                  <button className="add-to-cart">Add to Cart</button>
+                  <button className="add-to-cart">Add to Cart +</button>
                 </div>
               </div>
             </div>
@@ -70,7 +71,7 @@ const ShopFromFarm = () => {
                     <p className="price1">300.00</p>
                     <p className="price2">299.00</p>
                   </div>
-                  <button className="add-to-cart">Add to Cart</button>
+                  <button className="add-to-cart">Add to Cart +</button>
                 </div>
               </div>
             </div>
@@ -92,7 +93,7 @@ const ShopFromFarm = () => {
                     <p className="price1">499.00</p>
                     <p className="price2">499.00</p>
                   </div>
-                  <button className="add-to-cart">Add to Cart</button>
+                  <button className="add-to-cart">Add to Cart +</button>
                 </div>
               </div>
             </div>
@@ -116,7 +117,7 @@ const ShopFromFarm = () => {
                     <p className="price1">300.00</p>
                     <p className="price2">299.00</p>
                   </div>
-                  <button className="add-to-cart">Add to Cart</button>
+                  <button className="add-to-cart">Add to Cart +</button>
                 </div>
               </div>
             </div>
@@ -138,7 +139,7 @@ const ShopFromFarm = () => {
                     <p className="price1">300.00</p>
                     <p className="price2">299.00</p>
                   </div>
-                  <button className="add-to-cart">Add to Cart</button>
+                  <button className="add-to-cart">Add to Cart +</button>
                 </div>
               </div>
             </div>
@@ -160,7 +161,7 @@ const ShopFromFarm = () => {
                     <p className="price1">300.00</p>
                     <p className="price2">299.00</p>
                   </div>
-                  <button className="add-to-cart">Add to Cart</button>
+                  <button className="add-to-cart">Add to Cart +</button>
                 </div>
               </div>
             </div>
@@ -182,7 +183,7 @@ const ShopFromFarm = () => {
                     <p className="price1">499.00</p>
                     <p className="price2">499.00</p>
                   </div>
-                  <button className="add-to-cart">Add to Cart</button>
+                  <button className="add-to-cart">Add to Cart +</button>
                 </div>
               </div>
             </div>
