@@ -334,7 +334,7 @@ const page = () => {
         <div className="shop-sections ">
           <div className={`category-section ${showFilters ? "open" : ""}`}>
             <div className="close-btn" onClick={() => setShowFilters(false)}>
-             <img src="https://cdn-icons-png.flaticon.com/128/2732/2732657.png"></img>
+              <img src="https://cdn-icons-png.flaticon.com/128/2732/2732657.png"></img>
             </div>
             {/* rest of your category section */}
 
@@ -516,56 +516,58 @@ const page = () => {
           {/* product show / item section */}
 
           <div className="item-section pt-4">
-           
-            
             <div className="all-filters d-flex gap-3">
-
-               {/* product search bar */}
+              {/* product search bar */}
               <input
                 className="product-search"
                 placeholder="search for products"
               ></input>
               {/* <img src='https://cdn-icons-png.flaticon.com/128/54/54481.png' className="search-icon" ></img> */}
 
-             <div className="d-flex gap-1 bottom-filters justify-content-between">
+              <div className="d-flex gap-1 bottom-filters justify-content-between">
+                {/* filter toggle button */}
+                <div className="filter-outer">
+                  <button
+                    className="btn  filters-toggle-btn "
+                    onClick={() => setShowFilters(true)}
+                  >
+                    <img
+                      src="https://cdn-icons-png.flaticon.com/128/15430/15430342.png"
+                      className="filter-img"
+                    ></img>
+                    Filters
+                  </button>
+                </div>
 
-                 {/* filter toggle button */}
-              <div className="filter-outer">
-                 <button className="btn  filters-toggle-btn " onClick={() => setShowFilters(true)}>
-              <img src="https://cdn-icons-png.flaticon.com/128/15430/15430342.png" className="filter-img"></img>
-               Filters
-            </button>
+                <div className="last-filters d-flex gap-lg-3 gap-sm-2 gap-1">
+                  {/* show products */}
+                  <select
+                    id="showSelect"
+                    className="form-select form-select-sm w-auto"
+                    value={itemsToShow}
+                    onChange={(e) => setItemsToShow(Number(e.target.value))}
+                  >
+                    <option value="10">Show: 10</option>
+                    <option value="10"> 10</option>
+                    <option value="12">12</option>
+                    <option value="16">16</option>
+                  </select>
+
+                  {/* sort products */}
+                  <select
+                    id="showSelect"
+                    className="form-select form-select-sm w-auto "
+                    onChange={(e) => setSortOption(e.target.value)}
+                  >
+                    <option value="featured">Sort by: Featured</option>
+                    <option value="high to low">Price: High to Low</option>
+                    <option value="low to high">Price: Low to High</option>
+                    <option value="release date">Release Date</option>
+                    <option value="avg. rating">Avg. Rating</option>
+                  </select>
+                </div>
               </div>
-
-             <div className="last-filters d-flex gap-lg-3 gap-sm-2 gap-1">
-                 {/* show products */}
-              <select
-                id="showSelect"
-                className="form-select form-select-sm w-auto"
-                value={itemsToShow}
-                onChange={(e) => setItemsToShow(Number(e.target.value))}
-              >
-                <option value="10">Show: 10</option>
-                <option value="10"> 10</option>
-                <option value="12">12</option>
-                <option value="16">16</option>
-              </select>
-
-              {/* sort products */}
-              <select
-                id="showSelect"
-                className="form-select form-select-sm w-auto "
-                onChange={(e) => setSortOption(e.target.value)}
-              >
-                <option value="featured">Sort by: Featured</option>
-                <option value="high to low">Price: High to Low</option>
-                <option value="low to high">Price: Low to High</option>
-                <option value="release date">Release Date</option>
-                <option value="avg. rating">Avg. Rating</option>
-              </select>
-             </div>
             </div>
-             </div>
 
             {/* total found products */}
 
@@ -616,8 +618,8 @@ const page = () => {
                     </div>
 
                     <div className="shop-wishlist-icon">
-                    <img src="https://cdn-icons-png.flaticon.com/128/13369/13369080.png" />
-                  </div>
+                      <img src="https://cdn-icons-png.flaticon.com/128/13369/13369080.png" />
+                    </div>
                   </div>
                   <div>
                     <div className="price d-flex gap-1">

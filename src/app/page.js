@@ -7,6 +7,7 @@ import Testimonals from "./Components/Testimonals";
 import Faq from "./Components/Faq";
 import ShopFromFarm from "./Components/ShopFromFarm";
 import Footer from "./Components/Footer";
+import HeroSection from "./Components/HeroSection";
 
 export default function Home() {
   const products = [
@@ -124,7 +125,7 @@ useEffect(() => {
 
       {/* hero section */}
 
-      <div
+      {/* <div
         className="hero-section d-flex flex-column justify-content-center"
         style={{
           backgroundImage: `url(${currentImage})`,
@@ -143,14 +144,16 @@ useEffect(() => {
             <img src="/assets/next.png" alt="Next Icon" />
           </div>
         </div>
-      </div>
+      </div> */}
+      <HeroSection/>
+   
 
       {/* most popular section */}
 
       <div className="most-popular d-flex flex-column align-items-center">
         <p className="mb-0">Most Popular</p>
         <h1 className="text-center mx-2">Discover flavours in demand</h1>
-        <div className="carousel-container">
+        <div className="carousel-container d-flex gap-1">
           <button onClick={prevSlide} className="carousel-btn">
             <img src="/assets/back.png" alt="Previous" className="popular-btn" />
           </button>
