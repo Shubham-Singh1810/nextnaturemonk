@@ -151,7 +151,7 @@ const FeaturedCarousel = () => {
         </div>
       </div>
 
-      <div className="featured-carousel" style={{ display: "flex", gap: "20px", marginTop: "10px", flexWrap: "wrap", justifyContent: "center" }}>
+      <div className="featured-carousel ms-md-5" style={{ display: "flex", gap: "20px", marginTop: "10px", flexWrap: "wrap", justifyContent: "start" }}>
         {visibleProducts.map((product) => (
           <div key={product.id} className="feature-product" style={{ textAlign: "center" }}>
             <img src={product.image} alt={product.name} width="100" height="100" />
