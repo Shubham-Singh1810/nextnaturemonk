@@ -271,7 +271,7 @@ const page = () => {
               <div className="p-detail">
                 <h4>About the Product</h4>
                 <p>
-                {product.description}
+               {product.description.replace(/<\/?[^>]+(>|$)/g, "")}
                 </p>
               </div>
               <div className="p-detail">
