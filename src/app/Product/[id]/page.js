@@ -1,26 +1,71 @@
 "use client";
 import React from "react";
-import Navbar from "../Components/Navbar";
-import { useState } from "react";
-import Footer from "../Components/Footer";
+import Navbar from "../../Components/Navbar";
+import { useState , useEffect} from "react";
+import Footer from "../../Components/Footer";
+import { getProduct } from '../../services/product.service';
+import { useParams } from 'next/navigation';
 
 const page = () => {
+
+  //  product api calling
+  const { id } = useParams();
+  const [product, setProduct] = useState(null);
+
+
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+  async function load() {
+    try {
+      setLoading(true);
+      const data = await getProduct(id);
+      setProduct(data);
+      console.log(data); // Log the fetched product
+    } catch (err) {
+      setError("Failed to load product");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  if (id) load();
+}, [id]);
+
+
+
+
+
   const [count, setCount] = useState(1);
   const [selectedImage, setSelectedImage] = useState(
-    "https://freshcart-next-js.vercel.app/images/products/product-single-img-1.jpg"
+     product?.productHeroImage || ""
   );
+
   const [activeIndex, setActiveIndex] = useState(0);
-
-  const images = [
-    "https://freshcart-next-js.vercel.app/images/products/product-single-img-1.jpg",
-    "https://freshcart-next-js.vercel.app/images/products/product-single-img-2.jpg",
-    "https://freshcart-next-js.vercel.app/images/products/product-single-img-3.jpg",
-    "https://freshcart-next-js.vercel.app/images/products/product-single-img-4.jpg",
-  ];
-
-  const [activeTab, setActiveTab] = useState("details");
+   const [activeTab, setActiveTab] = useState("details");
 
    const [imagePreview, setImagePreview] = useState(null);
+
+     useEffect(() => {
+    if (product?.productHeroImage) {
+      setSelectedImage(product.productHeroImage);
+    }
+  }, [product]);
+
+
+  if (loading) return <p>Loading...</p>;
+
+  // const images = [
+  //    product.productHeroImage,
+  //   "https://freshcart-next-js.vercel.app/images/products/product-single-img-2.jpg",
+  //   "https://freshcart-next-js.vercel.app/images/products/product-single-img-3.jpg",
+  //   "https://freshcart-next-js.vercel.app/images/products/product-single-img-4.jpg",
+  // ];
+
+  const images = product.productGallery || [];
+  
+ 
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -33,21 +78,21 @@ const page = () => {
     }
   };
 
+
+
+  if (error) return <p>{error}</p>;
+  if (!product) return <p>No product found.</p>;
   return (
     <>
       <Navbar />
+  
       <div className="product-page">
         <div className="product-outer d-flex flex-md-nowrap flex-wrap gap-5">
-          <div className="product-image-side">
-            {/* Hero Image */}
-            <img
-              src={selectedImage}
-              className="product-img-hero"
-              alt="Product"
-            />
+          <div className="product-image-side d-flex">
+           
 
             {/* Thumbnail Images */}
-            <div className="d-flex gap-2">
+            <div className="d-flex flex-column gap-2">
               {images.map((img, index) => (
                 <img
                   key={index}
@@ -65,6 +110,13 @@ const page = () => {
               ))}
             </div>
 
+             {/* Hero Image */}
+            <img
+              src={selectedImage}
+              className="product-img-hero mt-2"
+              alt="Product"
+            />
+
             {/* CSS Styling */}
             <style jsx>{`
               .product-img-small {
@@ -76,8 +128,8 @@ const page = () => {
             `}</style>
           </div>
           <div className="product-details-side">
-            <p className="product-category fw-bold"> Snack & Munchies</p>
-            <h1 className="product-name ">Haldiram's Sev Bhujia</h1>
+            <p className="product-category fw-bold"> {product.category?.join(", ")}</p>
+            <h1 className="product-name ">{product.name}</h1>
             <div className="product-rating d-flex gap-2">
               <img
                 src="https://cdn-icons-png.flaticon.com/128/2107/2107957.png"
@@ -102,15 +154,19 @@ const page = () => {
               <p className="review fw-bold">(4 reviews)</p>
             </div>
             <div className="product-price d-flex gap-1">
-              <p className=" fw-bold real-price mb-0">$21.6 </p>{" "}
-              <p className="cut-price mb-0">$24</p>{" "}
+              <p className=" fw-bold real-price mb-0">{product.discountedPrice}</p>{" "}
+              <p className="cut-price mb-0">{product.price}</p>{" "}
               <p className=" text-danger mb-0">10% Off</p>
             </div>
 
             <hr className="hr mt-4 mb-4"></hr>
 
-            <div className="product-quantity d-flex gap-2">
+            {/* <div className="product-quantity d-flex gap-2">
               <p>250g</p> <p>500g</p> <p>1kg</p>
+            </div> */}
+
+            <div className="product-quantity d-flex align-items-center gap-2">
+            <h6 className="mb-0 fw-bold">Weight</h6>  <p>{product.itemWeight}</p>
             </div>
 
             <div className="product-count d-flex gap-1">
@@ -145,14 +201,14 @@ const page = () => {
             <div className="product-details d-flex ps-4">
               <div>
                 <p>Product Code:</p>
-                <p>Availability:</p>
+                <p>Stock Quantity:</p>
                 <p>Type:</p>
                 <p>Shipping:</p>
               </div>
               <div>
-                <p>FBB00255</p>
-                <p>In Stock</p>
-                <p>Fruits</p>
+                <p>{product.hsnCode}</p>
+                <p>{product.stockQuantity}</p>
+                <p>{product.productType}</p>
                 <p>01 day shipping.( Free pickup today)</p>
               </div>
             </div>
@@ -179,7 +235,7 @@ const page = () => {
               className={`mb-0  ${activeTab === "info" ? "active-text " : ""}`}
               onClick={() => setActiveTab("info")}
             >
-              Information
+             Attributes
             </p>
             <p
               className={`mb-0  ${
@@ -206,42 +262,27 @@ const page = () => {
           {activeTab === "details" && (
             <div className="Product Details ">
               <div className="p-detail">
-                <h4 className="">Nutrient Value & Benefits</h4>
+                <h4 className="">Product Overview</h4>
+                <p >
+  {product.shortDescription.replace(/<\/?[^>]+(>|$)/g, "")}
+</p>
+
+              </div>
+              <div className="p-detail">
+                <h4>About the Product</h4>
                 <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nisi,
-                  tellus iaculis urna bibendum in lacus, integer. Id imperdiet
-                  vitae varius sed magnis eu nisi nunc sit. Vel, varius habitant
-                  ornare ac rhoncus. Consequat risus facilisis ante ipsum netus
-                  risus adipiscing sagittis sed. Lorem ipsum dolor sit amet,
-                  consectetur adipiscing elit.
+                {product.description}
                 </p>
               </div>
               <div className="p-detail">
-                <h4>Storage Tips</h4>
-                <p>
-                  Nisi, tellus iaculis urna bibendum in lacus, integer. Id
-                  imperdiet vitae varius sed magnis eu nisi nunc sit. Vel,
-                  varius habitant ornare ac rhoncus. Consequat risus facilisis
-                  ante ipsum netus risus adipiscing sagittis sed.Lorem ipsum
-                  dolor sit amet, consectetur adipiscing elit.
-                </p>
+                <h4>Tax</h4>
+                <p>{product.tax}</p>
               </div>
               <div className="p-detail">
-                <h4>Unit</h4>
-                <p>3 units</p>
+                <h4>Ingredients</h4>
+                <p>{product.ingredients}</p>
               </div>
-              <div className="p-detail">
-                <h4>Seller</h4>
-                <p>DMart Pvt. LTD</p>
-              </div>
-              <div className="p-detail">
-                <h4>Disclaimer</h4>
-                <p>
-                  Image shown is a representation and may slightly vary from the
-                  actual product. Every effort is made to maintain accuracy of
-                  all information displayed.
-                </p>
-              </div>
+              
             </div>
           )}
 
@@ -250,44 +291,23 @@ const page = () => {
             <div className="information">
               <h4 className="mb-4">Details</h4>
               <div className="info-tables d-flex flex-md-nowrap flex-wrap gap-4">
-                <table className=" info-table text-sm ">
-                  <tbody>
-                    <tr>
-                      <td className=" font-medium">Weight</td>
-                      <td className="">1000 Grams</td>
-                    </tr>
-                    <tr>
-                      <td className=" font-medium">Ingredient Type</td>
-                      <td className="">Vegetarian</td>
-                    </tr>
-                    <tr>
-                      <td className=" font-medium">Brand</td>
-                      <td className="">Dmart</td>
-                    </tr>
-                    <tr>
-                      <td className=" font-medium">Item Package Quantity</td>
-                      <td className="">1</td>
-                    </tr>
-                    <tr>
-                      <td className=" font-medium">Form</td>
-                      <td className="">Larry the Bird</td>
-                    </tr>
-                    <tr>
-                      <td className=" font-medium">Manufacturer</td>
-                      <td className="">Dmart</td>
-                    </tr>
-                    <tr>
-                      <td className=" font-medium">Net Quantity</td>
-                      <td className="">340.0 Gram</td>
-                    </tr>
-                    <tr>
-                      <td className=" font-medium">Product Dimensions</td>
-                      <td className="">9.6 x 7.49 x 18.49 cm</td>
-                    </tr>
-                  </tbody>
-                </table>
+                <table className="info-table text-sm">
+  <tbody>
+    {product.productOtherDetails.map((detail) => (
+      <tr key={detail._id}>
+        <td className="font-medium">{detail.key}</td>
+        <td className="">
+          {detail.value && Array.isArray(detail.value)
+            ? detail.value.join(", ")
+            : detail.value}
+        </td>
+      </tr>
+    ))}
+  </tbody>
+</table>
 
-                <table className=" info-table text-sm ">
+
+                {/* <table className=" info-table text-sm ">
                   <tbody>
                     <tr>
                       <td className=" font-medium">ASIN</td>
@@ -310,7 +330,7 @@ const page = () => {
                       <td className="">Banana Robusta</td>
                     </tr>
                   </tbody>
-                </table>
+                </table> */}
               </div>
             </div>
           )}
