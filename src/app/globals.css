@@ -1970,12 +1970,13 @@ height: 100%;
   font-size: 24px;
   border-radius: 8px;
   transition: border-color 0.3s;
+  padding: 3px !important;
 }
 
 .otp-input:focus {
   outline: none;
-  /* border-color: #0d6efd;
-  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25); */
+  border-color: var(--secondary-color) !important;
+  box-shadow: 0 0 0 0.2rem rgba(179, 224, 182, 0.25) !important;
 }
 
 .otp-box {
@@ -1985,4 +1986,47 @@ height: 100%;
 }
 .otp-box h1 , .otp-box p{
   font-family: var(--font-secondary);
+}
+/* 
+policy css */
+.policy-page{
+  padding: 2% 5%;
+   background-color: #f6f9f8;
+}
+.policy-head{
+  padding: 5% 5%;
+  background-color: white;
+  border-radius: 15px;
+     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+     margin-bottom: 50px;
+}
+.policy-head p {
+  margin-top: 15px;
+  width: 90%;
+}
+.policy-head h1 {
+  font-family: var(--font-primary);
+  color: var(--primary-color);
+}
+.policy-head p {
+  font-family: var(--font-secondary);
+
+}
+.all-policies{
+   width: 80%;
+       margin-bottom: 50px;
+}
+.policy{
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgb(241, 241, 241);
+}
+.policy h3{
+   font-family: var(--font-secondary);
+   color: #1e1e1e;
+}
+.policy p {
+  font-family: var(--font-secondary);
+  font-size: 16px;
+  margin-left: 4px;
+  margin-bottom: 4px;
 }
