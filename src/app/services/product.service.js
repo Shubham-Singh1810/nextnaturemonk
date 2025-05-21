@@ -13,7 +13,7 @@ export const getProductServ = async () => {
     return response.data;
   } catch (error) {
     console.error("Error fetching product list:", error);
-    throw error; // Optional, depending on whether you want to handle it further up
+    throw error; 
   }
 };
 

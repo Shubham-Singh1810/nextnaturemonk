@@ -370,11 +370,10 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../Components/Navbar";
 import PriceFilter from "../Components/PriceFilter";
-// import products from '../data/products';
 import {getCategory, getProductServ} from "../services/product.service";
 import { useRouter } from 'next/navigation';
 
-import productsData from "../../data/products";
+// import productsData from "../../data/products";
 
 const page = () => {
 
@@ -440,7 +439,6 @@ function handleProductDetails(id) {
     const fetchCategory = async () => {
       try {
         const response = await getCategory();
-        // Assuming response structure: { data: [ { image: "url" }, ... ] }
         if (response?.data?.length > 0) {
           setCategories(response.data);
         }

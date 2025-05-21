@@ -22,7 +22,7 @@ const page = () => {
       setLoading(true);
       const data = await getProduct(id);
       setProduct(data);
-      console.log(data); // Log the fetched product
+      console.log(data); 
     } catch (err) {
       setError("Failed to load product");
     } finally {

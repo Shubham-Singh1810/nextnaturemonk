@@ -64,9 +64,8 @@ import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 
-// Import Swiper styles
 import "swiper/css";
-import "swiper/css/autoplay"; // required for autoplay to work
+import "swiper/css/autoplay";
 
 import { getBanners } from "../services/banner.service";
 
@@ -90,21 +89,28 @@ const HeroSection = () => {
 
   return (
     <div className="hero-slider-wrapper">
-      <Swiper
-        modules={[Autoplay]}
-        autoplay={{ delay: 3000, disableOnInteraction: false }}
-        loop={true}
-        speed={1000}
-        slidesPerView={1}
-      >
-        {slides.map((slide, index) => (
-          <SwiperSlide key={index}>
-            <div className="hero-section d-flex flex-column justify-content-center">
-              <img className="banner-img" src={slide.image} alt={`slide-${index}`} />
-            </div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+      {slides.length > 0 && (
+        <Swiper
+          key={slides.length}
+          modules={[Autoplay]}
+          autoplay={{ delay: 3000, disableOnInteraction: false }}
+          loop={true}
+          speed={1000}
+          slidesPerView={1}
+        >
+          {slides.map((slide, index) => (
+            <SwiperSlide key={index}>
+              <div className="hero-section d-flex flex-column justify-content-center">
+                <img
+                  className="banner-img"
+                  src={slide.image}
+                  alt={`slide-${index}`}
+                />
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      )}
     </div>
   );
 };

@@ -2,6 +2,8 @@ import axios from "axios";
 
 import { BASE_URL } from ".././utils/apibaseurlConfiguration";
 
+
+
 export const getBanners = async () => {
   try {
     const response = await axios.post(BASE_URL + "banner/list");
@@ -10,6 +12,6 @@ export const getBanners = async () => {
     
   } catch (error) {
     console.error("Error fetching product list:", error);
-    throw error; // Optional, depending on whether you want to handle it further up
+    throw error; 
   }
 };
