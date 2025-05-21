@@ -2030,3 +2030,7 @@ policy css */
   margin-left: 4px;
   margin-bottom: 4px;
 }
+
+.footer-links a{
+  text-decoration: none;
+}

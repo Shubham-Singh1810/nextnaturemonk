@@ -372,6 +372,7 @@ import Navbar from "../Components/Navbar";
 import PriceFilter from "../Components/PriceFilter";
 import {getCategory, getProductServ} from "../services/product.service";
 import { useRouter } from 'next/navigation';
+import Footer from "../Components/Footer";
 
 // import productsData from "../../data/products";
 
@@ -780,6 +781,8 @@ function handleProductDetails(id) {
           </div>
         </div>
       </div>
+
+      <Footer/>
     </>
   );
 };
