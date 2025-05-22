@@ -5,6 +5,7 @@ import Navbar from "../Components/Navbar";
 import Footer from "../Components/Footer";
 import { useRouter } from 'next/navigation';
 import { signUp } from "../services/authentication.service";
+import { otpSend } from "../services/authentication.service";
 
 const page = () => {
   const router = useRouter();
@@ -81,11 +82,21 @@ const handleSubmit = async (e) => {
   try {
     const response = await signUp(form); // calling API
     console.log("Signup successful:", response);
-  } catch (error) {
-    console.error("Signup failed:", error);
-  }
-};
 
+    sessionStorage.setItem("userPhone", formData.phone);
+
+
+      await otpSend(formData.phone);
+    alert("OTP sent successfully!");
+
+     router.push('/otp-verify');
+
+  } catch (error) {
+   console.error("Signup or OTP failed:", error);
+    alert("Something went wrong. Please try again.");
+  }
+
+};
 
 
   const handleLogin = () => {

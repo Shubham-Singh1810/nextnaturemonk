@@ -2,6 +2,8 @@ import axios from "axios";
 
 import { BASE_URL } from ".././utils/apibaseurlConfiguration";
 
+// policy  api
+
 export const getPolicy = async () => {
   try {
     const response = await axios.get(BASE_URL + "support/details");
@@ -13,3 +15,16 @@ export const getPolicy = async () => {
     throw error; 
   }
 };
+
+// contact api
+
+export const contact = async (formData) => {
+  try {
+    const response = await axios.post(BASE_URL + "support/add-contact-query",formData,);
+    return response.data;
+  } catch (error) {
+    console.error("Signup Error:", error);
+    throw error;
+  }
+};
+

@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from '../Components/Navbar';
 import Footer from '../Components/Footer';
-import { getPolicy } from '../services/policy.service';
+import { getPolicy } from '../services/support.service';
 
 const page = () => {
   const [policyData, setPolicyData] = useState(null);

@@ -1,9 +1,10 @@
 "use client"
 
-import React from 'react'
+import React, { useState } from 'react'
 import Navbar from '../Components/Navbar'
 import Footer from '../Components/Footer'
 import { useRouter } from 'next/navigation';
+import { logIn } from '../services/authentication.service';
 
 const page = () => {
 
@@ -13,6 +14,31 @@ const page = () => {
      router.push("/signup");
   }
 
+  const[formdata , setFormData] = useState({
+    email:"",
+    password:""
+  });
+
+const handleOnchange = (e) => {
+  const { name, value } = e.target;
+  setFormData((prev) => ({
+    ...prev,
+    [name]: value,
+  }));
+};
+
+
+ const handleSubmit = async(e) => {
+    e.preventDefault();
+    try{
+      const res = await logIn(formdata);
+       console.log("Message sent successfully!");
+       alert("login")
+    }
+    catch(error){
+      console.log("login error" + error)
+    }
+ }
 
   return (
     <>
@@ -24,9 +50,9 @@ const page = () => {
          </div>
          <div className='login-form'>
             <h2>Login to Your Account</h2>
-          <form className='d-flex flex-column align-items-center'>
+          <form className='d-flex flex-column align-items-center' onSubmit={handleSubmit}>
                 <div className="signup-div">
-                <input type="email" placeholder="Email" name="email" required />
+                <input type="email" placeholder="Email" name="email" required onChange={handleOnchange} />
               </div>
                <div className="signup-div">
                 <input
@@ -34,11 +60,12 @@ const page = () => {
                   placeholder="Password"
                   name="password"
                   required
+                  onChange={handleOnchange}
                 />
                 <button type="submit" className="register mt-3">Log In</button>
               </div>
           </form>
-            <p className="signup-p">Already have an account? <span className="signin-option fw-bold" onClick={handleSignup}>Sign in</span></p>
+            <p className="signup-p">Don't have an account? <span className="signin-option fw-bold" onClick={handleSignup}>Sign Up</span></p>
          </div>
        </div>
     </div> 
