@@ -36,6 +36,7 @@ const page = () => {
           <img
             src='https://t3.ftcdn.net/jpg/13/90/31/86/360_F_1390318667_bjVdMVxUeYvCARqYuc7datD4nlhTJ86l.jpg'
             alt="privacy policy"
+            className=''
           />
         </div>
 
