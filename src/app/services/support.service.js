@@ -28,3 +28,30 @@ export const contact = async (formData) => {
   }
 };
 
+
+//bulk order
+
+export const bulkOrder = async (formData) => {
+  try {
+    const response = await axios.post(BASE_URL + "bulk-order/create",formData);
+    return response.data;
+  } catch (error) {
+    console.error("Signup Error:", error);
+    throw error;
+  }
+};
+
+
+// export const bulkOrder = async (formData) => {
+//   try {
+//     const response = await axios.post(BASE_URL + "bulk-order/create", formData, {
+//       headers: {
+//         "Content-Type": "multipart/form-data",
+//       },
+//     });
+//     return response.data;
+//   } catch (error) {
+//     console.error("Signup Error:", error);
+//     throw error;
+//   }
+// };
