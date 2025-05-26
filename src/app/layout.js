@@ -1,5 +1,8 @@
 import { Geist, Geist_Mono } from "next/font/google";
+import { LoggedDataProvider } from './context/Context';
 import "./globals.css";
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,17 +34,21 @@ export default function RootLayout({ children }) {
       ></link>
 
       <link href="https://fonts.googleapis.com/css2?family=Poppins&family=Merriweather&display=swap" rel="stylesheet"/>
+     
 
 
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
+         <LoggedDataProvider>
         {children}
-
+          
+          <ToastContainer position="top-right" autoClose={4000} />
         <script
           src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
           integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
           crossorigin="anonymous"
         ></script>
+        </LoggedDataProvider>
         
       </body>
     </html>

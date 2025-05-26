@@ -8,58 +8,25 @@ import Faq from "./Components/Faq";
 import ShopFromFarm from "./Components/ShopFromFarm";
 import Footer from "./Components/Footer";
 import HeroSection from "./Components/HeroSection";
+import { getProductServ } from "./services/product.service";
 
 export default function Home() {
-  const products = [
-    {
-      id: 1,
-      image:
-        "https://gustosafoods.com/wp-content/uploads/2024/10/4-plus-300x300.png",
-      description: "4 Suta Plus Makhana| (12mm and above)| 200gm",
-      price1: "₹300.00",
-      price2: "₹299.00",
-    },
-    {
-      id: 2,
-      image:
-        "https://gustosafoods.com/wp-content/uploads/2024/10/6-plus-hp-600x600.png",
-      description: "S6.5 Suta Plus(20.7mm above)| Handpicked Makhana|200gm",
-      price1: "₹499.00",
-      price2: "₹499.00",
-    },
-    {
-      id: 3,
-      image:
-        "	https://gustosafoods.com/wp-content/uploads/2024/10/5-plus-Handpicked-300x300.jpg",
-      description: "5 Suta Plus Handpicked Makhana(15.8mm and above)| 200gm",
-      price1: "₹349.00 ",
-      price2: "₹299.00",
-    },
-    {
-      id: 4,
-      image:
-        "https://gustosafoods.com/wp-content/uploads/2024/10/2-300x300.png",
-      description: "Yogibhog Makhana 500gm (250gm x 2)",
-      price1: "₹1,400.00",
-      price2: "₹799.00",
-    },
-    {
-      id: 5,
-      image:
-        "https://gustosafoods.com/wp-content/uploads/2024/10/3-300x300.png",
-      description: "Yogibhog | Premium Makhana Big Size 250gm",
-      price1: "₹700.00",
-      price2: "₹499.00",
-    },
-    {
-      id: 6,
-      image:
-        "https://gustosafoods.com/wp-content/uploads/2024/02/Peri-Peri-a--300x300.png",
-      description: "Frisky Roasted Makhana(Fox Nut), Peri Peri, jar - 70gm",
-      price1: "₹199.00",
-      price2: "₹198.00",
-    },
-  ];
+  
+   const [products, setProducts] = useState([]);
+
+    useEffect(() => {
+      const fetchProducts = async () => {
+        try {
+          const response = await getProductServ();
+          console.log(response.data);
+          setProducts(response.data || []);
+        } catch (error) {
+          console.error("Error loading products:", error);
+        }
+      };
+  
+      fetchProducts();
+    }, []);
 
   const [startIndex, setStartIndex] = useState(0);
   const [visibleCount, setVisibleCount] = useState(4);
@@ -88,7 +55,7 @@ useEffect(() => {
     .concat(products.slice(0, Math.max(0, end - products.length)));
   setVisibleProducts(visible);
 // Remove products from dependencies
-}, [startIndex, visibleCount]);
+}, [startIndex, visibleCount , products]);
 
 
   // 3️⃣ Navigation
@@ -150,7 +117,7 @@ useEffect(() => {
 
       {/* most popular section */}
 
-      <div className="most-popular d-flex flex-column align-items-center">
+      {/* <div className="most-popular d-flex flex-column align-items-center">
         <p className="mb-0">Most Popular</p>
         <h1 className="text-center mx-2">Discover flavours in demand</h1>
         <div className="carousel-container d-flex gap-1">
@@ -181,6 +148,50 @@ useEffect(() => {
                 </div>
               </div>
             ))}
+          </div>
+
+          <button onClick={nextSlide} className="carousel-btn">
+            <img src="/assets/next2.png" alt="Next" className="popular-btn" />
+          </button>
+        </div>
+      </div> */}
+
+      <div className="most-popular d-flex flex-column align-items-center">
+        <p className="mb-0">Most Popular</p>
+        <h1 className="text-center mx-2">Discover flavours in demand</h1>
+        <div className="carousel-container most-popular-carousel d-flex gap-1">
+          <button onClick={prevSlide} className="carousel-btn">
+            <img src="/assets/back.png" alt="Previous" className="popular-btn" />
+          </button>
+
+          <div className="products-grid">
+          {visibleProducts.map((product) => (
+  <div key={product._id} className="product-card d-flex flex-column justify-content-between">
+    <div>
+      <a href={`/Product/${product._id}`}>
+        <img
+          src={product.productHeroImage}
+          alt={product.name}
+          className="product-img"
+        />
+      </a>
+     
+        <p className="category1 mb-1">{product.tags?.join(", ")}</p>
+         <p className="product-descrip mb-2">{product.name}</p>
+      <div className="wishlist-icon">
+        <img src="https://cdn-icons-png.flaticon.com/128/13369/13369080.png" />
+      </div>
+    </div>
+    <div>
+      <div className="price d-flex gap-1">
+        <p className="price1-home mb-1">₹{product.offerPrice}</p>
+        <p className="price2-home mb-1">₹{product.price}</p>
+      </div>
+      <button className="add-to-cart">Add to Cart</button>
+    </div>
+  </div>
+))}
+
           </div>
 
           <button onClick={nextSlide} className="carousel-btn">

@@ -108,7 +108,7 @@ const OtpVerifyPage = () => {
 
     const otpData = {
       phone: phone,
-      otp: otpValue,
+      phoneOtp: otpValue,
     };
 
     try {
