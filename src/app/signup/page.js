@@ -72,7 +72,7 @@ const handleSubmit = async (e) => {
   try {
     const response = await signUp(form); // calling API
     console.log("Signup successful:", response);
- toast.success(res.message);
+ toast.success(response.message);
     sessionStorage.setItem("userPhone", formData.phone);
 
 
