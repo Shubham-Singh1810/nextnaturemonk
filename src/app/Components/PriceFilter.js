@@ -90,8 +90,9 @@ const PriceFilter = ({ values, onChange }) => {
   const MAX = 130000;
 
   return (
-    <div className="price-filter" style={{ width: '100%', maxWidth: '300px', margin: '0 auto' }}>
-      <h5 className="mb-5">Price</h5>
+    <div className="price-filter mt-4" style={{ width: '100%', maxWidth: '300px', margin: '0 auto' }}>
+      <h4 className="mb-0">Price Range</h4>
+      <hr className="mt-1 mb-5" />
       
       <Range
         step={STEP}

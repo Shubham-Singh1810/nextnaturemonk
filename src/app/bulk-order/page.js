@@ -47,7 +47,7 @@ const BulkOrderPage = () => {
 
   return (
     <>
-      <Navbar />
+      <Navbar selectedItem="Bulk Order"/>
       <div className="bulk-order-page">
         <div className="text-center mb-5">
           <h1>Bulk Orders</h1>

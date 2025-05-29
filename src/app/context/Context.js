@@ -8,6 +8,7 @@ export const LoggedDataContext = createContext();
 // Provider Component
 export const LoggedDataProvider = ({ children }) => {
   const [loggedUserData, setLoggedUserData] = useState(null); // Store user data
+  const [productList, setProductList] = useState(null); 
 
   // Function to update user data globally and persist it in localStorage
   const updateLoggedUserData = (data) => {
@@ -33,7 +34,7 @@ export const LoggedDataProvider = ({ children }) => {
   }, []);
 
   return (
-    <LoggedDataContext.Provider value={{ loggedUserData, updateLoggedUserData }}>
+    <LoggedDataContext.Provider value={{ loggedUserData, updateLoggedUserData, setProductList:setProductList, productList:productList }}>
       {children}
     </LoggedDataContext.Provider>
   );

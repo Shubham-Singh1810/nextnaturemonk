@@ -16,7 +16,8 @@ const cardsData = [
   },
   {
     title: "Hello World!",
-    content: "Welcome to WordPress. This is your first post. Edit or delete it.",
+    content:
+      "Welcome to WordPress. This is your first post. Edit or delete it.",
   },
 ];
 
@@ -39,14 +40,14 @@ const Faq = () => {
   }, []);
 
   const next = () => {
-  setActiveIndex((prevIndex) => (prevIndex + 1) % cardsData.length);
-};
+    setActiveIndex((prevIndex) => (prevIndex + 1) % cardsData.length);
+  };
 
-const prev = () => {
-  setActiveIndex(
-    (prevIndex) => (prevIndex - 1 + cardsData.length) % cardsData.length
-  );
-};
+  const prev = () => {
+    setActiveIndex(
+      (prevIndex) => (prevIndex - 1 + cardsData.length) % cardsData.length
+    );
+  };
 
   const getVisibleCards = () => {
     const visible = [];
@@ -57,15 +58,17 @@ const prev = () => {
   };
 
   return (
-    <div className="faq-section text-center py-5">
-      <h2 className="mb-4">Must Read for Makhana Business</h2>
+    <div
+      className=" text-center py-md-5 py-2"
+      style={{ background: "whitesmoke" }}
+    >
+      <h2 className="mb-4" style={{ fontFamily: "poppins" }}>
+        Must Read for Makhana Business
+      </h2>
 
       <div className="d-flex justify-content-center align-items-center flex-wrap">
         {/* Left Icon */}
-        <div
-          onClick={prev}
-          style={{ cursor: "pointer", marginRight: "10px" }}
-        >
+        <div onClick={prev} style={{ cursor: "pointer", marginRight: "10px" }}>
           <FaChevronLeft size={24} />
         </div>
 
@@ -74,8 +77,12 @@ const prev = () => {
           {getVisibleCards().map((card, index) => (
             <div
               key={index}
-              className="card faq-card  shadow d-flex flex-column justify-content-center"
-              style={{ width: "19rem", minHeight: "180px" }}
+              className="card faq-card bg-light shadow-sm d-flex flex-column justify-content-center"
+              style={{
+                width: "19rem",
+                minHeight: "180px",
+                borderRadius: "none",
+              }}
             >
               <h5 className="mb-3 faq-title">{card.title}</h5>
               <p>{card.content}</p>
@@ -84,10 +91,7 @@ const prev = () => {
         </div>
 
         {/* Right Icon */}
-        <div
-          onClick={next}
-          style={{ cursor: "pointer", marginLeft: "10px" }}
-        >
+        <div onClick={next} style={{ cursor: "pointer", marginLeft: "10px" }}>
           <FaChevronRight size={24} />
         </div>
       </div>

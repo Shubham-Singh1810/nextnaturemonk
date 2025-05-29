@@ -1,169 +1,27 @@
-// import React, { useState, useEffect } from "react";
+import React from "react";
+import ProductCard from "./ProductCard";
 
-// const products = [
-//   { id: 1, name: "Flavoured Makhana", image: "https://gustosafoods.com/wp-content/uploads/2024/02/Chatpata_Masala-a-png.png" },
-//   { id: 2, name: "Sample Makhana", image: "https://gustosafoods.com/wp-content/uploads/2024/10/6-plus-hp-1024x1024.png" },
-//   { id: 3, name: "Raw Makhana", image: "https://gustosafoods.com/wp-content/uploads/2024/10/6-suta-plus-hp.png" }
-// ];
-
-// const FeaturedCarousel = () => {
-//   const [startIndex, setStartIndex] = useState(0);
-//   const [visibleCount, setVisibleCount] = useState(4); // Default visible count is 4
-//   const [visibleProducts, setVisibleProducts] = useState([]);
-
-//   // 1️⃣ Update visible count based on screen size
-//   useEffect(() => {
-//     const updateVisibleCount = () => {
-//       const width = window.innerWidth;
-//       if (width <= 600) setVisibleCount(2); // For mobile
-//       else if (width <= 800) setVisibleCount(3); // For tablets
-//       else if (width <= 1025) setVisibleCount(3); // For larger tablets or small desktops
-//       else setVisibleCount(3); // For large desktops
-//     };
-
-//     updateVisibleCount();
-//     window.addEventListener("resize", updateVisibleCount);
-//     return () => window.removeEventListener("resize", updateVisibleCount);
-//   }, []);
-
-//   // 2️⃣ Update visible products when startIndex or visibleCount changes
-//   useEffect(() => {
-//     const end = startIndex + visibleCount;
-//     const visible = products
-//       .slice(startIndex, end)
-//       .concat(products.slice(0, Math.max(0, end - products.length)));
-//     setVisibleProducts(visible);
-//   }, [startIndex, visibleCount]);
-
-//   // 3️⃣ Navigation (Next and Previous slide)
-//   const nextSlide = () => {
-//     setStartIndex((prev) => (prev + 1) % products.length); // Move 1 product at a time
-//   };
-
-//   const prevSlide = () => {
-//     setStartIndex((prev) => (prev - 1 + products.length) % products.length); // Move 1 product at a time
-//   };
-
-//   return (
-//     <div className="featured ">
-//       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }} className="mb-5">
-//         <h3 className="ms-md-5 ">Featured Categories</h3>
-//         <div className="d-flex gap-3 d-sm-none d-block">
-//           <button onClick={prevSlide} className="carousel-btn2">
-//             <img src="/assets/back.png" alt="Previous" />
-//           </button>
-//           <button onClick={nextSlide} className="carousel-btn2">
-//             <img src="/assets/next2.png" alt="Next" />
-//           </button>
-//         </div>
-//       </div>
-
-//       <div className="featured-carousel ms-md-5" style={{ display: "flex", gap: "20px", marginTop: "10px", flexWrap: "wrap", justifyContent: "start" }}>
-//         {visibleProducts.map((product) => (
-//           <div key={product.id} className="feature-product" style={{ textAlign: "center" }}>
-//             <img src={product.image} alt={product.name} width="100" height="100" />
-//             <p className="mb-0 mt-2">{product.name}</p>
-//           </div>
-//         ))}
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default FeaturedCarousel;
-
-
-"use Client"
-
-import { getCategory } from "../services/product.service";
-import React, { useState, useEffect } from "react";
-
- 
-const FeaturedCarousel = () => {
-
-
-  const [startIndex, setStartIndex] = useState(0);
-  const [visibleCount, setVisibleCount] = useState(4); // Default visible count is 4
-  const [visibleProducts, setVisibleProducts] = useState([]);
-
-
-   const [products, setProducts] = useState([]);
-
-  useEffect(() => {
-    const fetchCategory = async () => {
-      try {
-        const response = await getCategory();
-        if (response?.data?.length > 0) {
-          setProducts(response.data);
-         console.log("all categories:", response.data); // Properly logs the whole object
-
-        }
-      } catch (error) {
-        console.error("Failed to fetch banners", error);
-      }
-    };
-
-    fetchCategory();
-  }, []);
-
-  // 1️⃣ Update visible count based on screen size
-  useEffect(() => {
-    const updateVisibleCount = () => {
-      const width = window.innerWidth;
-      if (width <= 600) setVisibleCount(2); // For mobile
-      else if (width <= 800) setVisibleCount(3); // For tablets
-      else if (width <= 1025) setVisibleCount(3); // For larger tablets or small desktops
-      else setVisibleCount(5); // For large desktops
-    };
-
-    updateVisibleCount();
-    window.addEventListener("resize", updateVisibleCount);
-    return () => window.removeEventListener("resize", updateVisibleCount);
-  }, []);
-
-  // 2️⃣ Update visible products when startIndex or visibleCount changes
-  useEffect(() => {
-    const end = startIndex + visibleCount;
-    const visible = products
-      .slice(startIndex, end)
-      .concat(products.slice(0, Math.max(0, end - products.length)));
-    setVisibleProducts(visible);
-  }, [startIndex, visibleCount , products]);
-
-  // 3️⃣ Navigation (Next and Previous slide)
-  const nextSlide = () => {
-    setStartIndex((prev) => (prev + 1) % products.length); // Move 1 product at a time
-  };
-
-  const prevSlide = () => {
-    setStartIndex((prev) => (prev - 1 + products.length) % products.length); // Move 1 product at a time
-  };
-
+function FeaturedCarousel({ categorylist }) {
   return (
-    <div className="featured ">
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }} className="mb-5">
-        <h3 className="ms-md-5 ">Featured Categories</h3>
-        <div className="d-flex gap-3 d-lg-none d-block">
-          <button onClick={prevSlide} className="carousel-btn2">
-            <img src="/assets/back.png" alt="Previous" />
-          </button>
-          <button onClick={nextSlide} className="carousel-btn2">
-            <img src="/assets/next2.png" alt="Next" />
-          </button>
+    <div style={{ background: "whitesmoke" }}>
+      <div className="container py-md-5 py-3 productSliderDiv">
+        <h1 className="text-center text-secondary">Featured Categories</h1>
+        {/* <h5>Featured Categories</h5> */}
+        <div className="row py-3">
+          {categorylist?.map((v, i) => {
+            return (
+              <div className="col-4 col-md-3 col-lg-2">
+                <div className="categoryCard text-center">
+                  <img src={v?.image} />
+                  <p>{v?.name}</p>
+                </div>
+              </div>
+            );
+          })}
         </div>
-      </div>
-
-      <div className="featured-carousel ms-md-5" style={{ display: "flex", gap: "20px", marginTop: "10px", flexWrap: "wrap", justifyContent: "start" }}>
-        {visibleProducts.map((product) => (
-          <div key={product._id} className="feature-product" style={{ textAlign: "center" }}>
-            <img src={product.image} alt={product.name} width="100" height="100" />
-            <p className="mb-0 mt-2">{product.name}</p>
-          </div>
-        ))}
       </div>
     </div>
   );
-};
+}
 
 export default FeaturedCarousel;
-
