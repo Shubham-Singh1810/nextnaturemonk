@@ -59,6 +59,7 @@ export default function Home() {
       <ProductSlider
         title="Daily Best Sells"
         subTitle="Pure. Natural. Safe. Hygiene You Can Trust."
+        textAlignCenter={true}
         productList={productlist}
       />
       <Faq />
