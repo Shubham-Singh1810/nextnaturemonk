@@ -42,7 +42,7 @@ const Navbar = ({ selectedItem }) => {
     },
     {
       name: "About",
-      link: "/about",
+      link: "/about-us",
     },
   ];
   return (
@@ -59,7 +59,7 @@ const Navbar = ({ selectedItem }) => {
         >
           {navArr?.map((v, i) => {
             return (
-              <li>
+              <li key={i}>
                 <Link
                   href={v?.link}
                   style={{

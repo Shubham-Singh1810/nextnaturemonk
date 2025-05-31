@@ -45,3 +45,14 @@ export const getCategory = async () => {
     throw error; 
   }
 };
+
+// add to cart
+export const addToCartServ = async (payload) => {
+  try {
+    const response = await axios.post(BASE_URL + "user/add-to-cart/"+payload?.productId, {userId:payload?.userId});
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching product list:", error);
+    throw error; 
+  }
+};

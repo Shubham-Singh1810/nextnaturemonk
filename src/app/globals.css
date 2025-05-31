@@ -2992,3 +2992,153 @@ policy css */
   font-size: 14px;
 }
 }
+.productDetailsDiv h1{
+  font-family: poppins;
+  font-size: 30px;
+  font-weight: 600;
+  /* color: #3D9970; */
+  color:gray
+}
+.reviewDiv a{
+  font-family: sans-serif;
+}
+.productDetailsDiv h5{
+  font-family: poppins;
+  font-size: 16px;
+  font-weight: 500;
+}
+.varientDiv span{
+  border: 1px solid green;
+  border-radius: 2px;
+  font-family: sans-serif;
+}
+.counterDiv p{
+  font-family: 16px;
+  font-family: monospace;
+  border: 1px solid gray;
+  text-align: center;
+  padding: 8px 14px;
+  border-radius: 2px;
+  margin-right: 6px;
+  color: gray;
+}
+.productDetailsBtn button{
+  width: 48%;
+  background-color: #3d9970;
+  padding: 8px 0px;
+  font-family: poppins;
+  border: none;
+  border-radius: 6px;
+  color: white;
+}
+.productDetailsLeftBtnGroup p{
+  font-family: 16px;
+  font-family: poppins;
+  border: 1px solid gray;
+  text-align: center;
+  padding: 8px 14px;
+  border-radius: 2px;
+  width: 200px;
+  color: gray;
+  margin-bottom: 0px;
+  cursor: pointer;
+}
+.breadcrumb p{
+  font-family: poppins;
+  margin-right: 8px;
+}
+.discountedPrice{
+   font-size: 25px;
+   color: #00b33c;
+}
+.aboutMain p{
+  font-family: poppins;
+  color: gray;
+  font-size: 16px;
+}
+.aboutMain h1{
+  font-family: poppins;
+  font-size: 28px;
+}
+.aboutMissionCard{
+  border-radius: 16px;
+text-align: center;
+}
+.aboutMissionCard img{
+  opacity: 0.7;
+  height: 70px;
+}
+.aboutMain h4{
+  font-family: cursive;
+  font-size: 35px;
+}
+@media (max-width: 500px) {
+  .productDetailsDiv h1{
+
+  font-size: 16px;
+  
+}
+.counterDiv p{
+  font-family: 10px;
+  
+  padding: 3px 10px;
+  border-radius: 2px;
+  margin-right: 4px;
+  color: gray;
+}
+.varientDiv span{
+  font-size: 12px;
+}
+.row {
+    
+    margin-left: 0px !important;
+    margin-right: 0px !important
+}
+.breadcrumb p{
+  font-size: 11px;
+  margin-bottom: 0px;
+}
+.productDetailsDiv h5{
+  
+  font-size: 12px;
+  
+}
+.productDetailsBtn button{
+  
+  padding: 6px 0px;
+  
+  border-radius: 4px;
+  
+}
+.discountedPrice{
+   font-size: 16px;
+   color: #00b33c;
+}
+.productDetailsLeftBtnGroup p{
+  font-size: 10px !important;
+  padding: 4px 7px;
+  border-radius: 2px;
+  width: 100px;
+}
+.aboutMain p{
+  font-family: poppins;
+  color: gray;
+  font-size: 14px;
+}
+.aboutMain h1{
+  font-family: poppins;
+  font-size: 23px;
+}
+.aboutMain h4{
+  font-family: poppins;
+  font-size: 22px;
+}
+.aboutMissionCard{
+  border-radius: 12px;
+text-align: center;
+}
+.aboutMissionCard img{
+  opacity: 0.7;
+  height: 50px;
+}
+}
