@@ -13,6 +13,7 @@ import { getProductServ, getCategory } from "./services/product.service";
 import ProductSlider from "./Components/ProductSlider";
 import InfoContainer from "./Components/InfoContainer";
 import FooterNav from "./Components/FooterNav";
+import BlogSlider from "./Components/BlogSlider";
 
 export default function Home() {
   const [productlist, setProductList] = useState([]);
@@ -62,6 +63,7 @@ export default function Home() {
         textAlignCenter={true}
         productList={productlist}
       />
+      <BlogSlider/>
       <Faq />
       <Footer />
       

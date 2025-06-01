@@ -7,7 +7,8 @@ import "../globals.css";
 
 const Navbar = ({ selectedItem }) => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const { loggedUserData } = useContext(LoggedDataContext);
+  const { loggedUserData, cartList, setCartList } =
+    useContext(LoggedDataContext);
   const router = useRouter();
 
   const toggleMenu = () => {
@@ -37,14 +38,44 @@ const Navbar = ({ selectedItem }) => {
       link: "/bulk-order",
     },
     {
-      name: "Blog",
-      link: "/blog",
+      name: "Blogs",
+      link: "/blogs",
     },
     {
       name: "About",
       link: "/about-us",
     },
   ];
+  const handleIncreaseQty = (e, v) => {
+    e.preventDefault();
+    e.stopPropagation();
+    let localCartList = JSON.parse(localStorage.getItem("cartList")) || [];
+
+    const existingProduct = localCartList.find((item) => item._id === v._id);
+    if (existingProduct) {
+      existingProduct.quantity += 1;
+    }
+
+    localStorage.setItem("cartList", JSON.stringify(localCartList));
+    setCartList(localCartList);
+  };
+
+  const handleDecreaseQty = (e, v) => {
+    e.preventDefault();
+    e.stopPropagation();
+    let localCartList = JSON.parse(localStorage.getItem("cartList")) || [];
+
+    const existingProduct = localCartList.find((item) => item._id === v._id);
+    if (existingProduct) {
+      existingProduct.quantity -= 1;
+      if (existingProduct.quantity <= 0) {
+        localCartList = localCartList.filter((item) => item._id !== v._id);
+      }
+    }
+
+    localStorage.setItem("cartList", JSON.stringify(localCartList));
+    setCartList(localCartList);
+  };
   return (
     <>
       <div className="navbar-outer d-flex py-3 justify-content-between align-items-center">
@@ -75,11 +106,22 @@ const Navbar = ({ selectedItem }) => {
           })}
         </ul>
         <div className="nav-icons d-flex gap-4 align-items-center navRight">
-          <img
-            src="https://cdn-icons-png.flaticon.com/128/665/665865.png"
-            alt="cart-icon"
-            className="d-md-block d-none"
-          />
+          <div className="d-flex align-items-center ">
+            <img
+              src="https://cdn-icons-png.flaticon.com/128/665/665865.png"
+              alt="notification-icon"
+              data-bs-toggle="offcanvas"
+              data-bs-target="#cartSidebar"
+            />
+            <div className="notificationDiv">
+              <p>
+                {cartList?.reduce(
+                  (total, item) => total + (item.quantity || 0),
+                  0
+                )}
+              </p>
+            </div>
+          </div>
           {loggedUserData && loggedUserData.profilePic ? (
             <img
               src={loggedUserData.profilePic}
@@ -102,13 +144,83 @@ const Navbar = ({ selectedItem }) => {
               className="d-md-block d-none"
             />
           )}
-          <div className="d-flex align-items-center ">
-            <img
-              src="https://cdn-icons-png.flaticon.com/128/2645/2645890.png"
-              alt="notification-icon"
-            />
-            <div className="notificationDiv">
-              <p>2</p>
+
+          {/* Cart Sidebar */}
+          <div
+            className="offcanvas offcanvas-end"
+            tabIndex="-1"
+            id="cartSidebar"
+            style={{fontFamily:"poppins"}}
+          >
+            <div className="offcanvas-header">
+              <h5>
+                Your Cart (
+                {cartList?.reduce(
+                  (total, item) => total + (item.quantity || 0),
+                  0
+                )}{" "}
+                Products)
+              </h5>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="offcanvas"
+              ></button>
+            </div>
+
+            <div className="offcanvas-body">
+              {cartList?.map((item) => (
+                <div className="d-flex mb-3" key={item.id}>
+                  <img
+                    src={item.productHeroImage}
+                    className="me-3"
+                    style={{ width: "80px", height: "80px" }}
+                  />
+                  <div>
+                    <h6>{item.name}</h6>
+
+                    <div className="d-flex counterDiv ">
+                      <p
+                        style={{ borderColor: "red" }}
+                        onClick={(e) => handleDecreaseQty(e, item)}
+                      >
+                        -
+                      </p>
+                      <p>
+                        {/* {
+                          cartList.find((item) => item._id === value._id)
+                            ?.quantity
+                        } */}
+                        {item?.quantity}
+                      </p>
+                      <p
+                        style={{ borderColor: "green" }}
+                        onClick={(e) => handleIncreaseQty(e, item)}
+                      >
+                        +
+                      </p>
+                    </div>
+                    <p className="text-muted mt-1">
+                      <del>₹{item?.price}</del> ₹{item?.discountedPrice}
+                    </p>
+                  </div>
+                </div>
+              ))}
+
+              <hr />
+
+              <h6>
+                SUBTOTAL: ₹ (
+                {cartList?.reduce(
+                  (total, item) => total + item.discountedPrice * item.quantity,
+                  0
+                )}
+                )
+              </h6>
+
+              <button className="btn btn-success w-100 mt-4">
+                Proceed To Checkout
+              </button>
             </div>
           </div>
         </div>

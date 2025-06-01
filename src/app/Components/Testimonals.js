@@ -39,6 +39,7 @@ const Testimonals = () => {
                   return (
                     <div
                       className={"carousel-item  " + (i == 0 ? " active" : " ")}
+                      key={i}
                     >
                       <div
                         className="card text-center d-flex align-items-center shadow"

@@ -23,7 +23,7 @@ function InfoContainer() {
         <div className="row ">
           {infoArr?.map((v, i) => {
             return (
-              <div className="col-md-4 col-6 d-flex justify-content-center  my-2">
+              <div className="col-md-4 col-6 d-flex justify-content-center  my-2" key={i}>
                 <div className="d-flex align-items-center ">
                   <div className="bg-success d-flex justify-content-center align-items-center me-2 infoIconDiv" >
                     <img src={v?.img} />

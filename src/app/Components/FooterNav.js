@@ -18,11 +18,6 @@ function FooterNav({selectedItem}) {
       image: "https://cdn-icons-png.flaticon.com/128/2976/2976215.png",
     },
     {
-      name: "Cart",
-      link: "/",
-      image: "https://cdn-icons-png.flaticon.com/128/665/665865.png",
-    },
-    {
       name: "Me",
       link: "/",
       image: "https://cdn-icons-png.flaticon.com/128/1077/1077114.png",

@@ -68,7 +68,7 @@ const page = () => {
         <div className="row">
           {infoArr?.map((v, i) => {
             return (
-              <div className="col-md-4 col-12 ">
+              <div className="col-md-4 col-12 " key={i}>
                 <div className="aboutMissionCard border p-2 shadow mb-2">
                   <img src={v?.img} className="img-fluid" />
                   <h3>{v?.title}</h3>

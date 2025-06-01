@@ -9,6 +9,8 @@ export const LoggedDataContext = createContext();
 export const LoggedDataProvider = ({ children }) => {
   const [loggedUserData, setLoggedUserData] = useState(null); // Store user data
   const [productList, setProductList] = useState(null); 
+  const [cartList, setCartList] = useState(null); 
+  const [wishList, setWishList] = useState(null); 
 
   // Function to update user data globally and persist it in localStorage
   const updateLoggedUserData = (data) => {
@@ -31,10 +33,27 @@ export const LoggedDataProvider = ({ children }) => {
       setLoggedUserData(JSON.parse(storedUser)); // Restore context state from localStorage
       console.log('User data restored from localStorage:', JSON.parse(storedUser));
     }
+    
   }, []);
+  useEffect(() => {
+  const storedCartList = localStorage.getItem("cartList");
+  if (storedCartList) {
+    setCartList(JSON.parse(storedCartList));
+  } else {
+    setCartList([]);
+  }
+}, []);
+ useEffect(() => {
+  const storedWishList = localStorage.getItem("wishList");
+  if (storedWishList) {
+    setWishList(JSON.parse(storedWishList));
+  } else {
+    setWishList([]);
+  }
+}, []);
 
   return (
-    <LoggedDataContext.Provider value={{ loggedUserData, updateLoggedUserData, setProductList:setProductList, productList:productList }}>
+    <LoggedDataContext.Provider value={{setWishList, wishList, cartList, setCartList, loggedUserData, updateLoggedUserData, setProductList:setProductList, productList:productList }}>
       {children}
     </LoggedDataContext.Provider>
   );

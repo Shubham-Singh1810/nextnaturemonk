@@ -6,14 +6,12 @@ import "slick-carousel/slick/slick-theme.css";
 
 function ProductSlider({title, subTitle, productList, textAlignCenter}) {
  var settings = {
+    arrows: true,
     dots: true,
     infinite: true,
+    speed: 500,
     slidesToShow: 4,
     slidesToScroll: 1,
-    //  autoplay: true,
-    // speed: 2000,
-    // autoplaySpeed: 2000,
-    // cssEase: "linear",
      responsive: [
       {
         breakpoint: 1024,

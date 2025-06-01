@@ -1,119 +1,95 @@
 "use client";
-
-import React, { useState, useEffect } from "react";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
-
-const cardsData = [
-  {
-    title: "What is Suta in Makhana?",
-    content:
-      "What is Suta in Makhana? Soota is a unit of length rarely used in daily life but essential in the",
-  },
-  {
-    title: "A Complete Guide to Makhana Grading and Sizing for New Businesses",
-    content:
-      "Table of Contents Makhana size is the most important thing you need to know if you’re planning to start a",
-  },
-  {
-    title: "Hello World!",
-    content:
-      "Welcome to WordPress. This is your first post. Edit or delete it.",
-  },
-];
-
-const Faq = () => {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [visibleCount, setVisibleCount] = useState(3);
-
-  // Responsive logic
-  useEffect(() => {
-    const updateVisibleCount = () => {
-      const width = window.innerWidth;
-      if (width <= 600) setVisibleCount(1);
-      else if (width <= 1203) setVisibleCount(2);
-      else setVisibleCount(3);
-    };
-
-    updateVisibleCount();
-    window.addEventListener("resize", updateVisibleCount);
-    return () => window.removeEventListener("resize", updateVisibleCount);
-  }, []);
-
-  const next = () => {
-    setActiveIndex((prevIndex) => (prevIndex + 1) % cardsData.length);
-  };
-
-  const prev = () => {
-    setActiveIndex(
-      (prevIndex) => (prevIndex - 1 + cardsData.length) % cardsData.length
-    );
-  };
-
-  const getVisibleCards = () => {
-    const visible = [];
-    for (let i = 0; i < visibleCount; i++) {
-      visible.push(cardsData[(activeIndex + i) % cardsData.length]);
+import React, { useEffect, useRef, useState } from "react";
+import { getFaqListServ } from "../services/faq.service";
+import { useRouter } from "next/navigation";
+import moment from "moment";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+function Faq() {
+  const router = useRouter();
+  const [list, setList] = useState([]);
+  const getFaqListFunc = async () => {
+    let response = await getFaqListServ();
+    if (response?.data?.statusCode == "200") {
+      setList(response?.data?.data);
     }
-    return visible;
   };
+  useEffect(() => {
+    getFaqListFunc();
+  }, []);
+  var settings = {
+    dots: true,
+    arrows: true,
+    infinite: true,
+    slidesToShow: 4,
+    slidesToScroll: 1,
 
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+          infinite: true,
+          dots: false,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+          initialSlide: 2,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
+  };
   return (
-    <div
-      className=" text-center py-md-5 py-2"
-      style={{ background: "whitesmoke" }}
-    >
-      <h2 className="mb-4" style={{ fontFamily: "poppins" }}>
-        Must Read for Makhana Business
-      </h2>
-
-      <div className="d-flex justify-content-center align-items-center flex-wrap">
-        {/* Left Icon */}
-        <div onClick={prev} style={{ cursor: "pointer", marginRight: "10px" }}>
-          <FaChevronLeft size={24} />
+    <div className="py-md-5 py-4">
+      <div className="container">
+        <div className="d-flex align-items-center mb-4" style={{opacity:"0.7"}}>
+          <img
+            src="https://cdn-icons-png.flaticon.com/128/1660/1660165.png"
+            style={{ height: "40px" }}
+          />
+          <h2 className="ms-2" style={{ fontFamily: "poppins" }}>
+           <u>Commanlly Asked Questions</u> 
+          </h2>
         </div>
-
-        {/* Cards */}
-        <div className="d-flex gap-4 flex-wrap justify-content-center ">
-          {getVisibleCards().map((card, index) => (
-            <div
-              key={index}
-              className="card faq-card bg-light shadow-sm d-flex flex-column justify-content-center"
-              style={{
-                width: "19rem",
-                minHeight: "180px",
-                borderRadius: "none",
-              }}
-            >
-              <h5 className="mb-3 faq-title">{card.title}</h5>
-              <p>{card.content}</p>
-            </div>
-          ))}
+        <div className="row mb-4">
+           <Slider {...settings}>
+            {list?.map((v, i) => {
+            return (
+              <div className="col-md-3 col-12 " key={i}>
+                <div
+                  className="aboutMissionCard px-3 border shadow mb-2 blogCard mx-md-2 mx-0 d-flex justify-content-center align-items-center"
+                  style={{ background: "white", height: "300px" }}
+                >
+                  <div>
+                    <h4 className="mb-2" >
+                      {v?.question}
+                    </h4>
+                    <hr />
+                    <p style={{ textAlign: "left" }}>{v?.answer} </p>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+           </Slider>
+          
         </div>
-
-        {/* Right Icon */}
-        <div onClick={next} style={{ cursor: "pointer", marginLeft: "10px" }}>
-          <FaChevronRight size={24} />
-        </div>
-      </div>
-
-      {/* Dots */}
-      <div className="mt-4">
-        {cardsData.map((_, index) => (
-          <span
-            key={index}
-            style={{
-              width: "12px",
-              height: "12px",
-              borderRadius: "50%",
-              display: "inline-block",
-              margin: "0 6px",
-              backgroundColor: index === activeIndex ? "lightgreen" : "#ddd",
-            }}
-          ></span>
-        ))}
       </div>
     </div>
   );
-};
+}
 
 export default Faq;
