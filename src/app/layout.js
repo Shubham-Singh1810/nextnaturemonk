@@ -35,7 +35,7 @@ export default function RootLayout({ children }) {
 
       <link href="https://fonts.googleapis.com/css2?family=Poppins&family=Merriweather&display=swap" rel="stylesheet"/>
      
-
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>

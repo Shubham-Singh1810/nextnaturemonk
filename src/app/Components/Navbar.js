@@ -76,6 +76,48 @@ const Navbar = ({ selectedItem }) => {
     localStorage.setItem("cartList", JSON.stringify(localCartList));
     setCartList(localCartList);
   };
+  const [showPaymentPopup, setShowPaymentPopup] = useState(false);
+
+  const handleProceedToCheckout = () => {
+    setShowPaymentPopup(true);
+  };
+  const handleClosePaymentPopup = () => {
+    setShowPaymentPopup(false);
+  };
+  const initiatePayment = () => {
+    const amount = cartList?.reduce(
+      (total, item) => total + item.discountedPrice * item.quantity,
+      0
+    );
+
+    const options = {
+      key: "rzp_test_fT349CvRXH2mv0",
+      amount: amount * 100, 
+      currency: "INR",
+      name: "Gustosa Foods",
+      description: "Purchase Transaction",
+      image: "/assets/logo.png",
+      handler: function (response) {
+        console.log(response);
+        alert(
+          "Payment Successful! Payment ID: " + response.razorpay_payment_id
+        );
+        setShowPaymentPopup(false);
+      },
+      prefill: {
+        name: loggedUserData?.name || "Guest User",
+        email: loggedUserData?.email || "guest@example.com",
+        contact: loggedUserData?.mobile || "9996588662",
+      },
+      theme: {
+        color: "#3D9970",
+      },
+    };
+
+    const rzp1 = new window.Razorpay(options);
+    rzp1.open();
+  };
+
   return (
     <>
       <div className="navbar-outer d-flex py-3 justify-content-between align-items-center">
@@ -150,7 +192,7 @@ const Navbar = ({ selectedItem }) => {
             className="offcanvas offcanvas-end"
             tabIndex="-1"
             id="cartSidebar"
-            style={{fontFamily:"poppins"}}
+            style={{ fontFamily: "poppins" }}
           >
             <div className="offcanvas-header">
               <h5>
@@ -218,13 +260,52 @@ const Navbar = ({ selectedItem }) => {
                 )
               </h6>
 
-              <button className="btn btn-success w-100 mt-4">
+              <button
+                className="btn btn-success w-100 mt-4"
+                onClick={handleProceedToCheckout}
+              >
                 Proceed To Checkout
               </button>
             </div>
           </div>
         </div>
       </div>
+      {/* Payment Popup */}
+      {showPaymentPopup && (
+        <div
+          className="payment-popup position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center"
+          style={{ background: "rgba(0,0,0,0.5)", zIndex: 9999 }}
+        >
+          <div
+            className="bg-white p-4 rounded"
+            style={{ width: "400px", maxWidth: "90%" }}
+          >
+            <div className="d-flex justify-content-between align-items-center mb-3">
+              <h5>Payment Summary</h5>
+              <button
+                className="btn-close"
+                onClick={handleClosePaymentPopup}
+              ></button>
+            </div>
+
+            <p>
+              Total Products:{" "}
+              {cartList?.reduce((total, item) => total + item.quantity, 0)}
+            </p>
+            <p>
+              Subtotal: ₹
+              {cartList?.reduce(
+                (total, item) => total + item.discountedPrice * item.quantity,
+                0
+              )}
+            </p>
+
+            <button className="btn btn-primary w-100" onClick={initiatePayment}>
+              Pay Now
+            </button>
+          </div>
+        </div>
+      )}
     </>
   );
 };
