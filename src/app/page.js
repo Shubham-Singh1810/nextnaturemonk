@@ -14,7 +14,8 @@ import ProductSlider from "./Components/ProductSlider";
 import InfoContainer from "./Components/InfoContainer";
 import FooterNav from "./Components/FooterNav";
 import BlogSlider from "./Components/BlogSlider";
-
+import axios from "axios";
+import ComboProductSlider from "./Components/ComboProductSlider";
 export default function Home() {
   const [productlist, setProductList] = useState([]);
   const getProductList = async () => {
@@ -43,12 +44,14 @@ export default function Home() {
   return (
     <>
       <Navbar selectedItem="Home" />
-      <HeroSection />
+      <HeroSection category="Home" />
       <InfoContainer />
       <ProductSlider
         title="Most Popular"
         subTitle="Discover flavours in demand"
-        productList={productlist}
+        productList={productlist?.filter((v, i) => {
+          return v?.productApperence == "Popular";
+        })}
       />
       <FeaturedCarousel categorylist={categorylist} />
       <ProductSlider
@@ -61,13 +64,18 @@ export default function Home() {
         title="Daily Best Sells"
         subTitle="Pure. Natural. Safe. Hygiene You Can Trust."
         textAlignCenter={true}
-        productList={productlist}
+        productList={productlist?.filter((v, i) => {
+          return v?.productApperence == "Best Seller";
+        })}
       />
-      <BlogSlider/>
+      <BlogSlider />
+      <ComboProductSlider  title="Combo Packs"
+        subTitle="Look out our latest combo"
+        productList={productlist}/>
       <Faq />
       <Footer />
-      
-      <FooterNav selectedItem="Home"/>
+
+      <FooterNav selectedItem="Home" />
     </>
   );
 }

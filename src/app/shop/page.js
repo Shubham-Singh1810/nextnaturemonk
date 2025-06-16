@@ -11,17 +11,7 @@ const page = () => {
   const [priceRange, setPriceRange] = useState([50, 400]);
   const [productlist, setProductList] = useState([]);
   const [showLoader, setShowLoader] = useState(false);
-  const getProductList = async () => {
-    setShowLoader(true);
-    try {
-      let response = await getProductServ();
-      console.log(response?.data);
-      if (response?.statusCode == "200") {
-        setProductList(response?.data);
-      }
-    } catch (error) {}
-    setShowLoader(false);
-  };
+  
   const [showLoaderCategory, setShowLoaderCategory] = useState(false);
   const [categorylist, setCategoryList] = useState([]);
   const getCategoryList = async () => {
@@ -36,9 +26,26 @@ const page = () => {
     setShowLoaderCategory(false);
   };
   useEffect(() => {
-    getProductList();
     getCategoryList();
   }, []);
+  const [payload, setPayload]=useState({
+    searchKey:"",
+    pageCount:5,
+  })
+  const getProductList = async () => {
+    setShowLoader(true);
+    try {
+      let response = await getProductServ(payload);
+      console.log(response?.data);
+      if (response?.statusCode == "200") {
+        setProductList(response?.data);
+      }
+    } catch (error) {}
+    setShowLoader(false);
+  };
+  useEffect(()=>{
+    getProductList();
+  }, [payload])
   return (
     <div>
       <Navbar selectedItem="Shop" />
@@ -46,19 +53,25 @@ const page = () => {
         <div className="row mx-0 mt-5">
           <div className="col-3 categoryList">
             <div>
-              <h4 className="mb-0">Categories</h4>
+              <div className="d-flex justify-content-between align-items-center">
+                <h4 className="mb-0">Categories</h4>
+                <img
+                  src="https://cdn-icons-png.flaticon.com/128/6364/6364586.png"
+                  style={{ height: "15px", opacity: "0.6" }}
+                />
+              </div>
+
               <hr className="mt-1" />
               <div>
                 {showLoaderCategory
-                  ? [1, 2, 3, 4]?.map((v, i) => {
+                  ? [1, 2, 3, 4, 5, 6]?.map((v, i) => {
                       return (
                         <div>
                           <div className="d-flex align-items-center py-2 pb-0 px-2  text-light mb-1 shadow-sm rounded border">
-                            <Skeleton height={40} width={40}/>
+                            <Skeleton height={40} width={40} />
                             <div className="ms-2 w-100">
-                              <Skeleton width="100%" height={18}/>
-                              <Skeleton width="100%" height={18}/>
-                              
+                              <Skeleton width="100%" height={18} />
+                              <Skeleton width="100%" height={18} />
                             </div>
                           </div>
                         </div>
@@ -90,7 +103,6 @@ const page = () => {
                     width: "100%",
                     borderRadius: "12px",
                   }}
-                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLG7ZoSR8D-rxqIz19GTSYnbWtBPGjFMN6yw&s"
                 />
               </div>
             </div>
@@ -98,11 +110,14 @@ const page = () => {
           <div className="col-9">
             <div className="row">
               <div className="col-8">
-                <input className="form-control" placeholder="Search Product" />
+                <input className="form-control" placeholder="Search Product" onChange={(e)=>setPayload({...payload, searchKey:e?.target?.value})}/>
               </div>
               <div className="col-2">
-                <select className="form-control">
+                <select className="form-control" onChange={(e)=>setPayload({...payload, pageCount:e?.target?.value})}>
                   <option>Show</option>
+                  <option>5</option>
+                  <option>10</option>
+                  <option>15</option>
                 </select>
               </div>
               <div className="col-2">

@@ -117,9 +117,10 @@ function ProductCard({ value }) {
       className="productCard shadow-sm border"
       onClick={() => router.push("/product-details/" + value?._id)}
     >
+      
       <div className="d-flex justify-content-between align-items-center heartIcon pe-2">
         <h6 className="badge border text-dark m-2">
-          {value?.category ? value?.category[0] : "Category"}
+          {value?.categoryDetails ? value?.categoryDetails[0]?.name : "Category"}
         </h6>
         <img onClick={(e)=>handleAddToWishListLocal(e, value)}
          src={ wishList?.find((item) => item._id === value._id) ?  "https://cdn-icons-png.flaticon.com/128/2077/2077502.png" : "https://cdn-icons-png.flaticon.com/128/1077/1077035.png"} />
@@ -147,7 +148,7 @@ function ProductCard({ value }) {
               <p style={{borderColor:"green"}}  onClick={(e) => handleIncreaseQty(e, value)}>+</p>
             </div>
           ) : (
-            <button onClick={(e) => handleAddToCartLocal(e, value)}>
+            <button onClick={(e) => handleAddToCartLocal(e, value)} className="bg-danger" >
               Add To Cart
             </button>
           )}

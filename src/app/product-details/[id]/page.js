@@ -154,6 +154,9 @@ function page() {
                 <p>Reviews</p>
                 <p>Nutritional Facts</p>
               </div>
+              <div>
+                <div>{details?.shortDescription}</div>
+              </div>
             </div>
           </div>
         </div>

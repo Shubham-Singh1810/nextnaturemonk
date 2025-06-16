@@ -1,3 +1,5 @@
+"use client"
+
 import React from "react";
 import Link from 'next/link';
 
@@ -8,16 +10,16 @@ const Footer = () => {
         <div className="footer-inner d-flex  gap-4">
           <div className="footer-1 footer-item">
             <img
-              src="/assets/logo.png"
+              src="/assets/logo.jpeg"
               alt="logo"
-              className="img-fluid footer-logo"
+              className="img-fluid "
+              style={{height:"80px", borderRadius:"4px"}}
             />
             <p className="text-white mt-4">
-              We’re passionate about crafting delicious and nutritious snacks
-              that bring joy to your daily life. Our specialty lies in creating
-              mouth-watering makhana flavors that cater to diverse tastes and
-              dietary preferences. We make snacking healthier and more enjoyable
-              for everyone.
+            We’re passionate about creating effective and gentle hygiene products that enhance your
+             daily routine. Our specialty lies in offering natural, safe solutions
+              that cater to diverse skin types and health needs.
+             We make personal care healthier and more enjoyable for everyone.
             </p>
 
             <div className="social-icons d-flex gap-2 mt-4">
@@ -50,7 +52,7 @@ const Footer = () => {
               Station Club Road, Near Navratan Durga Asthan, N H 31, Purena -
               854301 (BR)
             </p>
-            <p>hello@gustosafoods.com</p>
+            <p>hello@hyzenith.com</p>
             <p>+91-81000 03505</p>
             <p>+91-92056 00140,41,42</p>
           </div>
@@ -58,7 +60,7 @@ const Footer = () => {
 
         <div className="d-flex flex-wrap justify-content-between mt-4 pt-4 pb-5">
           <p className="mb-0 pb-2 text-light">
-            © 2024. All Rights Reserved Gustosa Foods
+            © 2024. All Rights Reserved Hyzenith Foods
           </p>
           <div className="d-flex gap-3">
             <img src="/assets/paypal.png" className="company-img" />

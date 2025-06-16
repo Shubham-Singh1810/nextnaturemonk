@@ -17,9 +17,9 @@ export const addressCreate = async (formdata) => {
 
 // get Address
 
-export const addressList = async () => {
+export const addressList = async (payload) => {
   try {
-    const response = await axios.post(BASE_URL + "address/list");
+    const response = await axios.post(BASE_URL + "address/list", payload);
     return response.data;
   } catch (error) {
     console.error("Login Error:", error);

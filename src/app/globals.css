@@ -893,7 +893,7 @@ body {
 .testimonals {
   position: relative;
   padding: 8% 10%;
-  background: url("https://gustosafoods.com/wp-content/uploads/2024/02/makhana-2.jpg");
+  background: url("/assets/testimonial.jfif");
   background-size: cover;
   background-position: center;
   z-index: 1;
@@ -935,8 +935,9 @@ body {
 }
 
 .testi-h {
-  color: var(--secondary-color);
+  color: #DC2F21;
   margin-right: 10vw;
+  font-weight: 600;
 }
 
 @media (max-width: 1100px) {
@@ -2188,7 +2189,7 @@ body {
 .signup-p {
   margin-top: 15px;
   font-size: 15px;
-  font-family: var(--font-secondary);
+  font-family: poppins; 
 }
 
 @media (max-width: 1024px) {
@@ -2838,7 +2839,7 @@ policy css */
 .productSliderDiv h1 {
   font-family: poppins;
   font-weight: 500;
-  color: #3d9970;
+  color: #DC2F21;
   font-size: 45px;
 }
 .productSliderDiv h5 {
@@ -2851,7 +2852,7 @@ policy css */
   height: 160px;
   width: 160px;
   border-radius: 50%;
-  border: 3px solid #3d9970;
+  border: 3px solid #DC2F21;
   padding: 4px;
 }
 .categoryCard p {
@@ -3055,6 +3056,16 @@ policy css */
   font-family: poppins;
   color: gray;
   font-size: 16px;
+  text-align: justify;
+}
+.aboutMain label{
+   font-family: poppins;
+  color: gray;
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+.aboutMain input{
+  background-color: #fff;
 }
 .aboutMain h1{
   font-family: poppins;
@@ -3077,6 +3088,32 @@ text-align: center;
   font-family: poppins !important;
   height: 55px;
   text-align: left !important;
+}
+.comboProductNames{
+  font-family: poppins !important;
+  border-radius: 5px;
+  background-color: whitesmoke;
+  font-size: 12px;
+}
+.upperCircle{
+  height: 50px;
+  width: 50px;
+  position: relative;
+  /* border: 1px solid red; */
+  top: -45px;
+  background-color: #353535 !important;
+  border-radius: 50%;
+  margin-bottom: -30px
+}
+.lowerCircle{
+  height: 50px;
+  width: 50px;
+  position: relative;
+  /* border: 1px solid red; */
+  top: 0px;
+  background-color: #353535 !important;
+  border-radius: 50%;
+  margin-bottom: -30px
 }
 @media (max-width: 500px) {
   .blogCard h3{

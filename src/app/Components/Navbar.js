@@ -4,7 +4,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { LoggedDataContext } from "../context/Context";
 import "../globals.css";
-
+import { otpSend, otpVerify } from "../services/authentication.service";
+import { toast } from "react-toastify";
 const Navbar = ({ selectedItem }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const { loggedUserData, cartList, setCartList } =
@@ -38,6 +39,10 @@ const Navbar = ({ selectedItem }) => {
       link: "/bulk-order",
     },
     {
+      name: "Combo Packs",
+      link: "/combo-products",
+    },
+    {
       name: "Blogs",
       link: "/blogs",
     },
@@ -45,6 +50,7 @@ const Navbar = ({ selectedItem }) => {
       name: "About",
       link: "/about-us",
     },
+    
   ];
   const handleIncreaseQty = (e, v) => {
     e.preventDefault();
@@ -92,7 +98,7 @@ const Navbar = ({ selectedItem }) => {
 
     const options = {
       key: "rzp_test_fT349CvRXH2mv0",
-      amount: amount * 100, 
+      amount: amount * 100,
       currency: "INR",
       name: "Gustosa Foods",
       description: "Purchase Transaction",
@@ -117,14 +123,40 @@ const Navbar = ({ selectedItem }) => {
     const rzp1 = new window.Razorpay(options);
     rzp1.open();
   };
-
+  const [userFormData, setUserFormData] = useState({
+    phone: "",
+    otp: "",
+  });
+  const [showPhoneInput, setShowPhoneInput] = useState(false);
+  const sendOtpFunc = async () => {
+    try {
+      let response = await otpSend(userFormData);
+      if (response?.data?.statusCode == "200") {
+        toast.success(response?.data?.message);
+        setShowPhoneInput(true);
+      }
+    } catch (error) {
+      console.log(error?.response?.data?.message);
+    }
+  };
+  const otpVerifyFunc = async () => {
+    try {
+      let response = await otpVerify(userFormData);
+      if (response?.data?.statusCode == "200") {
+        toast.success(response?.data?.message);
+        setShowPhoneInput(true);
+      }
+    } catch (error) {
+      console.log(error?.response?.data?.message);
+    }
+  };
   return (
     <>
       <div className="navbar-outer d-flex py-3 justify-content-between align-items-center">
         {/* 🔷 Logo */}
         <div className="logo">
           <Link href="/">
-            <img src="/assets/logo.png" alt="logo" className="logo-img" />
+            <img src="/assets/logo.jpeg" alt="logo" className="logo-img" />
           </Link>
         </div>
         <ul
@@ -136,7 +168,7 @@ const Navbar = ({ selectedItem }) => {
                 <Link
                   href={v?.link}
                   style={{
-                    color: selectedItem == v?.name ? "#3D9970" : "#000",
+                    color: selectedItem == v?.name ? "#DB301F" : "#000",
                     opacity: selectedItem == v?.name ? "1" : "0.6",
                     fontWeight: selectedItem == v?.name ? "600" : "400",
                   }}
@@ -248,8 +280,8 @@ const Navbar = ({ selectedItem }) => {
                   </div>
                 </div>
               ))}
-
-              <hr />
+              {cartList?.length >0 && <>
+               <hr />
 
               <h6>
                 SUBTOTAL: ₹ (
@@ -259,53 +291,180 @@ const Navbar = ({ selectedItem }) => {
                 )}
                 )
               </h6>
-
+             
               <button
-                className="btn btn-success w-100 mt-4"
-                onClick={handleProceedToCheckout}
+                className="btn btn-danger w-100 mt-4"
+                onClick={()=>router.push("/check-out")}
               >
                 Proceed To Checkout
-              </button>
+              </button></>}
+             
             </div>
           </div>
         </div>
       </div>
       {/* Payment Popup */}
-      {showPaymentPopup && (
+      {/* {showPaymentPopup && (
         <div
           className="payment-popup position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center"
           style={{ background: "rgba(0,0,0,0.5)", zIndex: 9999 }}
         >
           <div
-            className="bg-white p-4 rounded"
-            style={{ width: "400px", maxWidth: "90%" }}
+            className="bg-white p-md-4  px-2 py-4 rounded"
+            style={{ width: "600px", maxWidth: "90%" }}
           >
             <div className="d-flex justify-content-between align-items-center mb-3">
-              <h5>Payment Summary</h5>
+              <h4 style={{ fontFamily: "poppins" }}>Payment Summary</h4>
               <button
                 className="btn-close"
                 onClick={handleClosePaymentPopup}
               ></button>
             </div>
 
-            <p>
+            {loggedUserData?._id ? (
+              <div className="border rounded p-3 mb-4">
+                <div className="d-flex justify-content-between align-items-center mx-2 mb-2">
+                  <h4 className="mb-0">Delivery Address</h4>
+                  <img
+                    src="https://cdn-icons-png.flaticon.com/128/6364/6364586.png"
+                    style={{ height: "15px", opacity: "0.6" }}
+                  />
+                </div>
+
+                <div className="row m-0 p-0">
+                  <div className="col-md-12 col-12 p-0 px-md-2 my-2">
+                    <input
+                      className="form-control"
+                      placeholder="Enter Full Name"
+                      style={{ height: "45px" }}
+                    />
+                  </div>
+                  <div className="col-md-6 col-12 p-0 px-md-2 my-2">
+                    <input
+                      className="form-control "
+                      placeholder="Enter Phone"
+                      style={{ height: "45px" }}
+                    />
+                  </div>
+
+                  <div className="col-md-6 col-12 p-0 px-md-2 my-2">
+                    <input
+                      className="form-control "
+                      placeholder="Enter Alternative Phone"
+                      style={{ height: "45px" }}
+                    />
+                  </div>
+                </div>
+                <div className="row m-0 p-0">
+                  <div className="col-md-12 col-12 p-0 px-md-2 my-2">
+                    <textarea
+                      className="form-control "
+                      placeholder="Area"
+                      style={{ height: "45px" }}
+                    />
+                  </div>
+
+                  <div className="col-md-6 col-12 p-0 px-md-2 my-2">
+                    <input
+                      className="form-control "
+                      placeholder="Landmark"
+                      style={{ height: "45px" }}
+                    />
+                  </div>
+                  <div className="col-md-6 col-12 p-0 px-md-2 my-2">
+                    <input
+                      className="form-control "
+                      placeholder="Pincode"
+                      style={{ height: "45px" }}
+                    />
+                  </div>
+                  <div className="col-md-4 col-12 p-0 px-md-2 my-2">
+                    <input
+                      className="form-control "
+                      placeholder="City"
+                      style={{ height: "45px" }}
+                    />
+                  </div>
+                  <div className="col-md-4 col-12 p-0 px-md-2 my-2">
+                    <input
+                      className="form-control "
+                      placeholder="State"
+                      style={{ height: "45px" }}
+                    />
+                  </div>
+                  <div className="col-md-4 col-12 p-0 px-md-2 my-2">
+                    <input
+                      className="form-control "
+                      placeholder="Country"
+                      style={{ height: "45px" }}
+                    />
+                  </div>
+                </div>
+
+                <button className="btn btn-success w-100  mt-2">Save</button>
+              </div>
+            ) : (
+              <div className="border rounded p-3 mb-4">
+                <h4 style={{ fontFamily: "sans-serif" }}>
+                  Please Verify your phone number
+                </h4>
+                <label>Phone Number</label>
+                <input
+                  value={userFormData?.phone}
+                  className="form-control"
+                  placeholder="Enter number"
+                  type="text"
+                  style={{ height: "45px" , zIndex:"10000"}}
+                  onChange={(e) =>
+                    setUserFormData({ ...userFormData, phone: e.target.value })
+                  }
+                />
+
+                {showPhoneInput && (
+                  <input
+                    value={userFormData?.otp}
+                    className="form-control mt-2"
+                    placeholder="Enter OTP"
+                    style={{ height: "45px" }}
+                    onChange={(e) =>
+                      setUserFormData({ ...userFormData, otp: e.target.value })
+                    }
+                  />
+                )}
+                {showPhoneInput ? (
+                  <button
+                    className="btn btn-success w-100  mt-2"
+                    onClick={() => sendOtpFunc()}
+                  >
+                    Verify OTP
+                  </button>
+                ) : (
+                  <button
+                    className="btn btn-primary w-100  mt-2"
+                    onClick={() => otpVerifyFunc()}
+                  >
+                    Send OTP
+                  </button>
+                )}
+              </div>
+            )}
+            <p style={{ fontFamily: "poppins" }}>
               Total Products:{" "}
               {cartList?.reduce((total, item) => total + item.quantity, 0)}
             </p>
-            <p>
+            <p style={{ fontFamily: "poppins" }}>
               Subtotal: ₹
               {cartList?.reduce(
                 (total, item) => total + item.discountedPrice * item.quantity,
                 0
               )}
             </p>
-
-            <button className="btn btn-primary w-100" onClick={initiatePayment}>
+            <button className="btn btn-warning w-100" onClick={initiatePayment}>
               Pay Now
             </button>
           </div>
         </div>
-      )}
+      )} */}
     </>
   );
 };

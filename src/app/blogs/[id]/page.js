@@ -25,7 +25,7 @@ const page = () => {
     <>
       <Navbar selectedItem="Blogs" />
 
-      <div className="container aboutMain">
+      <div className="container aboutMain py-md-5 py-3">
         <div className="row my-md-5 my-2 mx-0 mx-md-2">
           <div className="col-md-6 mt-auto col-12 ">
             <h1>{details?.title}</h1>
@@ -34,7 +34,7 @@ const page = () => {
               dangerouslySetInnerHTML={{ __html: details?.shortDescription }}
             />
 
-            <div className="d-flex">
+            <div className="d-flex w-100"  style={{ overflow:"auto"}}>
               {details?.tags?.split(",")?.map((v, i) => {
                 return (
                   <p className="border me-2 px-2 py-1 text-dark shadow-sm">
@@ -44,14 +44,14 @@ const page = () => {
               })}
             </div>
             <button
-              className="btn btn-success shadow"
+              className="btn btn-success shadow my-2 "
               style={{ borderRadius: "8px", width: "120px" }}
               onClick={() => router.push("/blogs")}
             >
                More Blogs
             </button>
           </div>
-          <div className="col-md-6 mt-auto col-12 ">
+          <div className="col-md-6  col-12 d-flex justify-content-between">
             <img src={details?.image} className="img-fluid" />
           </div>
         </div>

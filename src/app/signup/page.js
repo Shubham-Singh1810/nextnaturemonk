@@ -3,7 +3,7 @@
 import React, { useRef, useState } from "react";
 import Navbar from "../Components/Navbar";
 import Footer from "../Components/Footer";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 import { signUp } from "../services/authentication.service";
 import { otpSend } from "../services/authentication.service";
 import { toast } from "react-toastify";
@@ -52,43 +52,35 @@ const page = () => {
     }));
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
+    // Create FormData object for file upload
+    const form = new FormData();
+    form.append("firstName", formData.firstName);
+    form.append("lastName", formData.lastName);
+    form.append("email", formData.email);
+    form.append("phone", formData.phone);
+    form.append("password", formData.password);
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
+    if (fileInputRef.current?.files[0]) {
+      form.append("profilePic", fileInputRef.current.files[0]);
+    }
 
-  // Create FormData object for file upload
-  const form = new FormData();
-  form.append("firstName", formData.firstName);
-  form.append("lastName", formData.lastName);
-  form.append("email", formData.email);
-  form.append("phone", formData.phone);
-  form.append("password", formData.password);
-
-  if (fileInputRef.current?.files[0]) {
-    form.append("profilePic", fileInputRef.current.files[0]);
-  }
-
-  try {
-    const response = await signUp(form); // calling API
-    console.log("Signup successful:", response);
- toast.success(response.message);
-    sessionStorage.setItem("userPhone", formData.phone);
-
+    try {
+      const response = await signUp(form); // calling API
+      console.log("Signup successful:", response);
+      toast.success(response.message);
+      sessionStorage.setItem("userPhone", formData.phone);
 
       await otpSend(formData.phone);
-       
-    alert("OTP sent successfully!");
 
-     router.push('/otp-verify');
-
-  } catch (error) {
-   console.error("Signup or OTP failed:", error);
-    toast.error(error.response?.data?.message);
-  }
-
-};
-
+      router.push("/otp-verify");
+    } catch (error) {
+      console.error("Signup or OTP failed:", error);
+      toast.error(error.response?.data?.message);
+    }
+  };
 
   const handleLogin = () => {
     router.push("/login");
@@ -119,7 +111,7 @@ const handleSubmit = async (e) => {
                 />
                 <div
                   onClick={handleClick}
-                  className="signup-profile rounded-circle border border-success overflow-hidden"
+                  className="signup-profile rounded-circle border border-danger overflow-hidden"
                   style={{
                     width: "90px",
                     height: "90px",
@@ -130,7 +122,7 @@ const handleSubmit = async (e) => {
                   <img
                     src={
                       imageSrc ||
-                      "https://cdn-icons-png.flaticon.com/128/552/552721.png"
+                      "https://cdn-icons-png.flaticon.com/128/14771/14771804.png"
                     }
                     alt="Profile"
                     className="w-100 h-100"
@@ -195,13 +187,16 @@ const handleSubmit = async (e) => {
                 />
               </div>
 
-              <button type="submit" className="register">
+              <button type="submit" className="register btn-danger">
                 Register
               </button>
             </form>
             <p className="signup-p">
               Already have an account?{" "}
-              <span className="signin-option fw-bold" onClick={handleLogin}>
+              <span
+                className="signin-option text-danger fw-bold"
+                onClick={handleLogin}
+              >
                 Sign in
               </span>
             </p>

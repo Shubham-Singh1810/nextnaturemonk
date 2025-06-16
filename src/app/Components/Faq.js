@@ -53,7 +53,7 @@ function Faq() {
     ],
   };
   return (
-    <div className="py-md-5 py-4">
+    <div className="py-md-5 py-4 " >
       <div className="container">
         <div className="d-flex align-items-center mb-4" style={{opacity:"0.7"}}>
           <img
@@ -70,8 +70,8 @@ function Faq() {
             return (
               <div className="col-md-3 col-12 " key={i}>
                 <div
-                  className="aboutMissionCard px-3 border shadow mb-2 blogCard mx-md-2 mx-0 d-flex justify-content-center align-items-center"
-                  style={{ background: "white", height: "300px" }}
+                  className="aboutMissionCard px-3 border shadow-sm mb-2 blogCard mx-md-2 mx-0 d-flex justify-content-center align-items-center"
+                  style={{ background: "whitesmoke", height: "300px" }}
                 >
                   <div>
                     <h4 className="mb-2" >

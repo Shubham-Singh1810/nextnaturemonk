@@ -25,7 +25,7 @@ function InfoContainer() {
             return (
               <div className="col-md-4 col-6 d-flex justify-content-center  my-2" key={i}>
                 <div className="d-flex align-items-center ">
-                  <div className="bg-success d-flex justify-content-center align-items-center me-2 infoIconDiv" >
+                  <div className=" d-flex justify-content-center align-items-center me-2 bg-danger infoIconDiv">
                     <img src={v?.img} />
                   </div>
                   <div>

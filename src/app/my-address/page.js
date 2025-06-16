@@ -54,7 +54,7 @@ const Page = () => {
 
   const fetchAddresses = async () => {
     try {
-      const res = await addressList();
+      const res = await addressList({userId:loggedUserData?._id});
       setAddresses(res?.data || []);
     } catch (error) {
       console.error("Error fetching addresses:", error);

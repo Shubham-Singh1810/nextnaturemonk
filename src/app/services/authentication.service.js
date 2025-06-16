@@ -51,9 +51,9 @@ export const logIn = async (formdata) => {
 
 //otp send api
 
-export const otpSend = async (phone) => {
+export const otpSend = async (payload) => {
   try {
-    const response = await axios.post(BASE_URL + "user/send-otp",{ phone });
+    const response = await axios.post(BASE_URL + "user/send-otp",{ phone:payload?.phone });
     return response.data;
   } catch (error) {
     console.error("OTP Send Error:", error);

@@ -1,13 +1,10 @@
-
-
 "use client";
-
-import React, { useRef, useState } from "react";
+import React, { useState, useRef } from "react";
 import Navbar from "../Components/Navbar";
 import Footer from "../Components/Footer";
 import { bulkOrder } from "../services/support.service";
-
-const BulkOrderPage = () => {
+import { toast } from "react-toastify";
+function Page() {
   const fileInputRef = useRef(null);
 
   const [formData, setFormData] = useState({
@@ -27,322 +24,137 @@ const BulkOrderPage = () => {
     const file = e.target.files[0];
     setFormData((prev) => ({ ...prev, file }));
   };
-
+  const [loader, setLoader] = useState(false);
   const handleSubmit = async (e) => {
-     e.preventDefault();
-       try {
-         const res = await bulkOrder(formData);
-         console.log("Message sent successfully!");
-         setFormData({
-           firstName: "",
-    lastName: "",
-    contact: "",
-    message: "",
-    file: null,
-         });
-       } catch (err) {
-         console.error(err);
-       }
+    setLoader(true);
+    e.preventDefault();
+    const newFormData = new FormData();
+    newFormData.append("firstName", formData?.firstName)
+    newFormData.append("lastName", formData?.lastName)
+    newFormData.append("contactNumber", formData?.contact)
+    newFormData.append("image", formData?.file)
+    newFormData.append("message", formData?.message)
+    try {
+      const res = await bulkOrder(newFormData);
+      if (res?.statusCode == "200") {
+        setFormData({
+          firstName: "",
+          lastName: "",
+          contact: "",
+          message: "",
+          file: null,
+        });
+        if (fileInputRef.current) {
+          fileInputRef.current.value = null; // reset file input
+        }
+        toast.success(res?.message);
+      }
+    } catch (err) {
+      console.error(err);
+      toast.error("Inteernal Server Error");
+    }
+    setLoader(false);
   };
 
   return (
-    <>
-      <Navbar selectedItem="Bulk Order"/>
-      <div className="bulk-order-page">
-        <div className="text-center mb-5">
-          <h1>Bulk Orders</h1>
-        </div>
-
-        <div className="bulk-all-sections d-flex justify-content-center align-items-center">
-          <div className="bulk-section">
-            <div className="bulk-content">
-              <div>
-                <h3 className="mb-2">
-                  Order Makhana in Bulk – Premium Quality for Every Occasion
-                </h3>
-                <p>
-                  Just fill in your details and requirements below — our team
-                  will get back to you within 24 hours with pricing and options
-                  tailored to your needs.
-                </p>
-              </div>
-              <img src="/assets/bulk3.png" className="img-fluid" />
+    <div>
+      <Navbar selectedItem="Bulk Order" />
+      <div className="container aboutMain">
+        <form onSubmit={handleSubmit}>
+          <div className="row my-md-5 my-2 mx-0 mx-md-2 shadow bg-light">
+            <div className="col-md-4 col-12 d-flex justify-content-between px-0">
+              <img
+                style={{ width: "100%" }}
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrRIC_d4vuPvpayrbji1YuZ4G2Lagioq4pHQ&s"
+                className="img-fluid"
+              />
             </div>
-          </div>
-
-          <div className="bulk-form d-flex flex-column align-items-center">
-            <form onSubmit={handleSubmit}>
-              <h2 className="mb-4">Place Your Bulk Makhana Order</h2>
-
-              {/* First & Last Name */}
-              <div className="row mb-2">
-                <div className="col">
+            <div className="col-md-8 my-auto col-12 px-0 px-md-2">
+              <div className="row col-12 p-md-3 p-0">
+                <h1 className="py-md-4 py-3">Place Bulk Order</h1>
+                <div className="col-md-6 col-12 mb-2">
                   <label>First Name</label>
                   <input
-                    type="text"
-                    className="form-control"
                     name="firstName"
                     value={formData.firstName}
                     onChange={handleChange}
+                    className="form-control"
                     required
                   />
                 </div>
-                <div className="col">
+                <div className="col-md-6 col-12 mb-2">
                   <label>Last Name</label>
                   <input
-                    type="text"
-                    className="form-control"
                     name="lastName"
                     value={formData.lastName}
                     onChange={handleChange}
+                    className="form-control"
                     required
                   />
                 </div>
-              </div>
-
-              {/* Contact Number */}
-              <div className="mb-2">
-                <label>Contact Number</label>
-                <input
-                  type="tel"
-                  className="form-control"
-                  name="contact"
-                  value={formData.contact}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-
-              {/* Message */}
-              <div className="mb-2">
-                <label>Message / Requirements</label>
-                <textarea
-                  className="form-control"
-                  rows="3"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  required
-                ></textarea>
-              </div>
-
-              {/* File Upload */}
-              <div className="mb-2">
-                <label className="form-label">Add a photo or video</label>
-                <div
-                  className="form-control"
-                  style={{
-                    height: "90px",
-                    backgroundColor: "#f8f9fa",
-                    border: "1px solid #ced4da",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    cursor: "pointer",
-                  }}
-                  onClick={() =>
-                    fileInputRef.current && fileInputRef.current.click()
-                  }
-                >
-                  {formData.file ? formData.file.name : "Drop files here to upload"}
+                <div className="col-md-6 col-12 mb-2">
+                  <label>Contact Number</label>
                   <input
-                    type="file"
-                    ref={fileInputRef}
-                    className="d-none"
-                    accept="image/*,video/*"
-                    onChange={handleFileChange}
+                    name="contact"
+                    value={formData.contact}
+                    onChange={handleChange}
+                    className="form-control"
+                    required
                   />
                 </div>
+                <div className="col-md-6 col-12 mb-2">
+                  <label>File</label>
+                  <input
+                    type="file"
+                    className="form-control"
+                    onChange={handleFileChange}
+                    ref={fileInputRef}
+                  />
+                </div>
+                <div className="col-12 mb-2">
+                  <label>Message</label>
+                  <textarea
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    className="form-control"
+                    rows={5}
+                    required
+                  />
+                </div>
+                <div className="col-12 my-3">
+                  {formData?.firstName &&
+                  formData?.lastName &&
+                  formData?.contact &&
+                  formData?.file &&
+                  formData?.message ? (
+                    <button type="submit" className="btn btn-danger w-100">
+                      Submit
+                    </button>
+                  ) : loader ? (
+                    <button
+                      style={{ opacity: "0.5" }}
+                      className="btn btn-danger w-100"
+                    >
+                      Saving ...
+                    </button>
+                  ) : (
+                    <button
+                      style={{ opacity: "0.5" }}
+                      className="btn btn-danger w-100"
+                    >
+                      Submit
+                    </button>
+                  )}
+                </div>
               </div>
-
-              {/* Submit */}
-              <button type="submit" className="bulk-btn">
-                <i className="bi bi-send-fill me-2"></i> Submit Bulk Request
-              </button>
-            </form>
+            </div>
           </div>
-        </div>
+        </form>
       </div>
-      <Footer />
-    </>
+      {/* <Footer /> */}
+    </div>
   );
-};
+}
 
-export default BulkOrderPage;
-
-
-// "use client";
-
-// import React, { useRef, useState } from "react";
-// import Navbar from "../Components/Navbar";
-// import Footer from "../Components/Footer";
-// import { bulkOrder } from "../services/support.service";
-
-// const BulkOrderPage = () => {
-//   const fileInputRef = useRef(null);
-
-//   const [formData, setFormData] = useState({
-//     firstName: "",
-//     lastName: "",
-//     contact: "",
-//     message: "",
-//     file: null,
-//   });
-
-//   const handleChange = (e) => {
-//     const { name, value } = e.target;
-//     setFormData((prev) => ({ ...prev, [name]: value }));
-//   };
-
-//   const handleFileChange = (e) => {
-//     const file = e.target.files[0];
-//     setFormData((prev) => ({ ...prev, file }));
-//   };
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-
-//     const data = new FormData();
-//     data.append("firstName", formData.firstName);
-//     data.append("lastName", formData.lastName);
-//     data.append("contact", formData.contact);
-//     data.append("message", formData.message);
-//     if (formData.file) {
-//       data.append("file", formData.file);
-//     }
-
-//     try {
-//       const res = await bulkOrder(data); // sending FormData now
-//       console.log("Success:", res);
-
-//       setFormData({
-//         firstName: "",
-//         lastName: "",
-//         contact: "",
-//         message: "",
-//         file: null,
-//       });
-
-//       if (fileInputRef.current) fileInputRef.current.value = "";
-//     } catch (err) {
-//       console.error("Submission error:", err);
-//     }
-//   };
-
-//   return (
-//     <>
-//       <Navbar />
-//       <div className="bulk-order-page">
-//         <div className="text-center mb-5">
-//           <h1>Bulk Orders</h1>
-//         </div>
-
-//         <div className="bulk-all-sections d-flex justify-content-center align-items-center">
-//           <div className="bulk-section">
-//             <div className="bulk-content">
-//               <h3 className="mb-2">
-//                 Order Makhana in Bulk – Premium Quality for Every Occasion
-//               </h3>
-//               <p>
-//                 Just fill in your details and requirements below — our team will
-//                 get back to you within 24 hours with pricing and options tailored
-//                 to your needs.
-//               </p>
-//               <img src="/assets/bulk3.png" className="img-fluid" />
-//             </div>
-//           </div>
-
-//           <div className="bulk-form d-flex flex-column align-items-center">
-//             <form onSubmit={handleSubmit}>
-//               <h2 className="mb-4">Place Your Bulk Makhana Order</h2>
-
-//               <div className="row mb-2">
-//                 <div className="col">
-//                   <label>First Name</label>
-//                   <input
-//                     type="text"
-//                     className="form-control"
-//                     name="firstName"
-//                     value={formData.firstName}
-//                     onChange={handleChange}
-//                     required
-//                   />
-//                 </div>
-//                 <div className="col">
-//                   <label>Last Name</label>
-//                   <input
-//                     type="text"
-//                     className="form-control"
-//                     name="lastName"
-//                     value={formData.lastName}
-//                     onChange={handleChange}
-//                     required
-//                   />
-//                 </div>
-//               </div>
-
-//               <div className="mb-2">
-//                 <label>Contact Number</label>
-//                 <input
-//                   type="tel"
-//                   className="form-control"
-//                   name="contact"
-//                   value={formData.contact}
-//                   onChange={handleChange}
-//                   required
-//                 />
-//               </div>
-
-//               <div className="mb-2">
-//                 <label>Message / Requirements</label>
-//                 <textarea
-//                   className="form-control"
-//                   rows="3"
-//                   name="message"
-//                   value={formData.message}
-//                   onChange={handleChange}
-//                   required
-//                 ></textarea>
-//               </div>
-
-//               <div className="mb-2">
-//                 <label className="form-label">Add a photo or video</label>
-//                 <div
-//                   className="form-control"
-//                   style={{
-//                     height: "90px",
-//                     backgroundColor: "#f8f9fa",
-//                     border: "1px solid #ced4da",
-//                     display: "flex",
-//                     alignItems: "center",
-//                     justifyContent: "center",
-//                     cursor: "pointer",
-//                   }}
-//                   onClick={() =>
-//                     fileInputRef.current && fileInputRef.current.click()
-//                   }
-//                 >
-//                   {formData.file ? formData.file.name : "Drop files here to upload"}
-//                   <input
-//                     type="file"
-//                     ref={fileInputRef}
-//                     className="d-none"
-//                     accept="image/*,video/*"
-//                     onChange={handleFileChange}
-//                   />
-//                 </div>
-//               </div>
-
-//               <button type="submit" className="bulk-btn">
-//                 <i className="bi bi-send-fill me-2"></i> Submit Bulk Request
-//               </button>
-//             </form>
-//           </div>
-//         </div>
-//       </div>
-//       <Footer />
-//     </>
-//   );
-// };
-
-// export default BulkOrderPage;
+export default Page;

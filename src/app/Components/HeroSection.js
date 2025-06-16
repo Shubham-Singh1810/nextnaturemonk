@@ -8,7 +8,7 @@ import { getBanners } from "../services/banner.service";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
-const HeroSection = () => {
+const HeroSection = ({category}) => {
   const [slides, setSlides] = useState([]);
   const [showloader, setShowLoader] = useState(false);
   useEffect(() => {
@@ -44,7 +44,9 @@ const HeroSection = () => {
             speed={1000}
             slidesPerView={1}
           >
-            {slides.map((slide, index) => (
+            {slides.filter((v, i)=>{
+              return v?.category == category
+            }).map((slide, index) => (
               <SwiperSlide key={index}>
                 <div className="hero-section d-flex flex-column justify-content-center">
                   <img
