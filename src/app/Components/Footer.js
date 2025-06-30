@@ -70,7 +70,7 @@ const Footer = () => {
             <img src="/assets/JCB.png" className="company-img" />
           </div>
         </div>
-        <div className="d-flex justify-content-center mt-1">
+        {/* <div className="d-flex justify-content-center mt-1">
           <p className="text-light">
             Developed by{" "}
             <span className="geent-text">
@@ -79,7 +79,7 @@ const Footer = () => {
               </a>
             </span>{" "}
           </p>
-        </div>
+        </div> */}
       </div>
     </>
   );

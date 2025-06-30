@@ -138,7 +138,7 @@ function ProductCard({ value }) {
             {value?.discountedPrice} &#8377;
           </span>
         </p>
-        <p className="mb-md-3 mb-1 text-secondary">{value?.itemWeight} g</p>
+        
 
         <div className="d-flex justify-content-around align-items-center" >
           {cartList?.find((item) => item._id === value._id) ? (
