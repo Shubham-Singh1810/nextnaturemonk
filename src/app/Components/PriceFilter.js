@@ -83,23 +83,23 @@
 import React, { useState } from 'react';
 import { Range } from 'react-range';
 
-
-const PriceFilter = ({ values, onChange }) => {
+const PriceFilter = ({values , setValues}) => {
   const STEP = 1;
   const MIN = 0;
-  const MAX = 130000;
+  const MAX = 2000;
+
+  // const [values, setValues] = useState([50, 300]);
 
   return (
-    <div className="price-filter mt-4" style={{ width: '100%', maxWidth: '300px', margin: '0 auto' }}>
-      <h4 className="mb-0">Price Range</h4>
-      <hr className="mt-1 mb-5" />
+    <div className="price-filter" style={{ width: '100%', maxWidth: '300px', margin: '0 auto' }}>
+      <h5 className="mb-5">Price</h5>
       
       <Range
         step={STEP}
         min={MIN}
         max={MAX}
         values={values}
-        onChange={onChange} // ← changes will now go to parent
+        onChange={(newValues) => setValues(newValues)}
         renderTrack={({ props, children }) => (
           <div
             {...props}
@@ -111,7 +111,7 @@ const PriceFilter = ({ values, onChange }) => {
               borderRadius: '3px',
               marginTop: '20px'
             }}
-            className='d-flex align-items-top price-width'
+            className='d-flex align-items-top'
           >
             <div
               style={{
@@ -159,4 +159,3 @@ const PriceFilter = ({ values, onChange }) => {
 };
 
 export default PriceFilter;
-

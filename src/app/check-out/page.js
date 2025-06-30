@@ -20,7 +20,7 @@ const Page = () => {
 
 const [step, setStep] = useState(() => {
   // If user is logged in, start at Step 2
-  return loggedUserData?._id ? 2 : 3;
+  return loggedUserData?._id ? 2 : 1;
 });
 
 
@@ -95,7 +95,7 @@ const [step, setStep] = useState(() => {
         productHeroImage: item.productHeroImage,
       })),
       totalAmount: cartList?.reduce(
-        (total, item) => total + item.discountedPrice * item.quantity,
+        (total, item) => total + item?.discountedPrice * item.quantity,
         0
       ),
       address: addressForm,
@@ -131,7 +131,7 @@ const [step, setStep] = useState(() => {
         productId: item._id,
         quantity: item.quantity,
         totalPrice:
-          item.discountedPrice ?? item.pricing.comboPrice * item.quantity,
+          item.discountedPrice ?? item.pricing?.comboPrice * item.quantity,
         productHeroImage: item.productHeroImage,
       })),
       totalAmount: subTotal,

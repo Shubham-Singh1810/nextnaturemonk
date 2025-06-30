@@ -11,8 +11,8 @@
 }
 
 :root {
-  --primary-color: #479d78;
-  --secondary-color: #75c475;
+  --primary-color: #ea2b2b;
+  --secondary-color: #ea2b2b;
 }
 
 body {
@@ -1555,7 +1555,7 @@ body {
 
 .category:hover {
   color: var(--secondary-color);
-  border-bottom: 1px solid rgb(183, 240, 132);
+  border-bottom: 1px solid rgb(247, 204, 204);
 }
 
 .category p {
@@ -1808,7 +1808,7 @@ body {
   .shop-sections {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    /* justify-content: center; */
   }
 
   .category-section {
@@ -2516,15 +2516,18 @@ policy css */
 
 /* profile css */
 
+/* profile css */
+
 .user-profile {
   background-color: #f7f8fa;
-  padding: 3% 7%;
-  height: 100vh;
+  padding: 7% 7%;
+  min-height: 100vh;
+  height: 100%;
 }
 .user-profile h2 {
-  margin-bottom: 25px;
+  margin-bottom: 30px;
   font-family: var(--font-secondary);
-  color: var(--primary-color);
+  color: brown;
 }
 
 .loading-div {
@@ -2544,8 +2547,11 @@ policy css */
   height: 22px;
 }
 .profile-left {
-  width: 25%;
+  width: 100%;
   padding: 2% 1%;
+}
+.left-menu{
+  width:25%;
 }
 .profile-right {
   width: 75%;
@@ -2556,7 +2562,7 @@ policy css */
   padding: 10px 10px;
 }
 .profile-left > div:hover {
-  background-color: #dcefea;
+  background-color: #f7eeec;
   border-radius: 2px;
 }
 .profile-left h5 {
@@ -2579,6 +2585,7 @@ policy css */
 }
 .menu-item h5 {
   white-space: nowrap;
+ 
 }
 .name {
   width: 35%;
@@ -2626,7 +2633,7 @@ policy css */
 
 .editable-input:focus {
   border-color: var(--primary-color);
-  box-shadow: 0 0 0 2px rgba(42, 185, 87, 0.2);
+  box-shadow: 0 0 0 2px rgba(185, 42, 42, 0.152);
 }
 @media (max-width: 1024px) {
   .editable-input {
@@ -2636,7 +2643,15 @@ policy css */
     width: 45%;
   }
 }
-@media (max-width: 860px) {
+@media (max-width: 573px) {
+  .name {
+    width: 100%;
+  }
+}
+@media (max-width: 992px) {
+  .user-profile h2 {
+  margin-bottom: 10px;
+}
   .profile-section {
     flex-wrap: wrap !important;
   }
@@ -2648,6 +2663,9 @@ policy css */
     width: 100%;
     padding: 2% 1%;
     gap: 3px;
+  }
+  .left-menu{
+    width: 100%;
   }
   .profile-right {
     width: 100%;
@@ -2681,8 +2699,8 @@ policy css */
   border: none;
 } */
 .selected-detail {
-  background-color: #dcefea;
-  border-left: 4px solid var(--primary-color);
+  background-color: #f7eeec;
+  border-left: 4px solid var(--secondary-color);
   /* padding-left: 10px; */
   padding: 10px 10px;
   border-radius: 4px;
@@ -2729,7 +2747,7 @@ policy css */
 .add-address {
   padding: 10px 2%;
   width: 40%;
-  border: 1px solid #00b33c;
+  border: 1px solid #b31200;
 }
 .address-form {
   margin-bottom: 20px;
@@ -2754,7 +2772,7 @@ policy css */
 .address-form input:focus {
   outline: none;
   border-color: var(--secondary-color);
-  box-shadow: 0 0 0 0.2rem rgba(71, 157, 120, 0.25);
+  box-shadow: 0 0 0 0.2rem rgba(157, 78, 71, 0.158);
 }
 .address-card input,
 .address-card select {
@@ -2780,6 +2798,27 @@ policy css */
   .add-address {
     width: 100%;
   }
+  .cartImg{
+     height: 60px !important;
+     width: 60px !important;
+}
+.cartName{
+  font-size: 12px;
+}
+.cartPrice{
+   font-size: 12px;
+}
+}
+@media (max-width:576px) {
+    .paymentImage{
+      width: 130px !important;
+    }
+}
+.productImage{
+  transition: all 0.7s ease;
+}
+.productImage:hover{
+  transform: scale(1.1);
 }
 
 /*  */
@@ -2804,9 +2843,13 @@ policy css */
   font-weight: 500;
   font-family: monospace;
 }
-.productCard img {
+/* .productCard img {
   height: 180px;
   width: 180px;
+} */
+ .productCard img {
+  height: 210px;
+  width: 100%;
 }
 .productCard h6 {
   font-family: cursive;
@@ -2825,7 +2868,7 @@ policy css */
 }
 .productCard button {
   width: 1000%;
-  background-color: #3d9970;
+  background-color: rgb(233, 42, 42);
   padding: 6px 0px;
   font-family: poppins;
   border: none;
@@ -3313,4 +3356,32 @@ text-align: center;
   font-size: 10px;
  
 }
+}
+
+/* //pagination style */
+
+.custom-pagination .page-item .page-link {
+  background-color: #f0f0f0;
+  color: #000;
+  border: none;
+  margin: 0 5px;
+  border-radius: 6px;
+  min-width: 44px;
+  text-align: center;
+}
+
+.custom-pagination .page-item.active .page-link {
+  background-color: #333;
+  color: #fff;
+}
+
+.custom-pagination .page-item.disabled .page-link {
+  color: #bbb;
+  pointer-events: none;
+  background-color: #f0f0f0;
+}
+
+.productImage:hover {
+  transform: scale(1.05);
+  cursor: pointer;
 }

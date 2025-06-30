@@ -106,11 +106,11 @@ function page() {
     <div>
       <Navbar selectedItem="Shop" />
       <div className="container my-md-5 my-4">
-        <div className="d-flex mt-md-5 mt-2 breadcrumb">
-          <p className="text-danger">Home -</p>
-          <p className="text-danger">Shop -</p>
-          <p>{details?.name}</p>
-        </div>
+        <div className="d-flex mt-md-5 mt-5 breadcrumb">
+            <p style={{ color: "rgb(188 94 94)" , cursor:"pointer" }} onClick={() => router.push("/")}>Home -</p>
+            <p style={{ color: "red", cursor:"pointer"  }}  onClick={() => router.push("/shop")}>Shop -</p>
+            <p>{details?.name}</p>
+          </div>
          <div className="row px-md-2 px-0 marginLeft0">
               <div className="col-md-6 col-12 row px-md-2 px-0">
                 <div className="col-md-12 col-12 d-flex justify-content-center align-items-center border  mb-2">
@@ -276,8 +276,8 @@ function page() {
                         style={{ borderRadius: "5px", height: "41px" }}
                       >
                         <p
-                          style={{ backgroundColor: "#6d0d0c", height: "100%" }}
-                          className="w-100 text-white mb-0 d-flex justify-content-center align-items-center "
+                          style={{ height: "100%" }}
+                          className="w-100 text-white mb-0 d-flex justify-content-center align-items-center bg-danger "
                           onClick={(e) => handleDecreaseQty(e, details)}
                         >
                           -
@@ -292,8 +292,8 @@ function page() {
                           }
                         </p>
                         <p
-                          className="w-100 text-white mb-0 d-flex justify-content-center align-items-center"
-                          style={{ backgroundColor: "#6d0d0c", height: "100%" }}
+                          className="w-100 text-white mb-0 d-flex justify-content-center align-items-center bg-danger"
+                          style={{  height: "100%" }}
                           onClick={(e) => handleIncreaseQty(e, details)}
                         >
                           +

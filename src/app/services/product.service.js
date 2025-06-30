@@ -65,3 +65,92 @@ export const addToCartServ = async (payload) => {
     throw error; 
   }
 };
+
+// my orders
+
+export const orderListServ = async (userId) => {
+  try {
+    const response = await axios.get(BASE_URL + `booking/user/${userId}`);
+    return response.data;
+  } catch (error) {
+    console.error("Order list Error:", error);
+    throw error;
+  }
+};
+
+// my order details
+
+export const orderDetailsServ = async (id) => {
+  try {
+    const response = await axios.get(BASE_URL + `booking/details/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error("Order list Error:", error);
+    throw error;
+  }
+};
+
+// states api
+
+export const getStatesServ = async () => {
+  try {
+    const response = await axios.post(BASE_URL + "state/list");
+    return response.data;
+  } catch (error) {
+    console.error("state list Error:", error);
+    throw error;
+  }
+};
+
+// city api
+
+export const getCityByStateServ = async (stateId) => {
+    try {
+      const response = await axios.get(BASE_URL + `city?stateId=${stateId}`);
+      return response;
+    } catch (error) {
+      console.error("Error fetching cities by state:", error);
+      throw error;
+    }
+  }
+
+
+//pincode api
+
+export const getPincodeByCityServ = async (cityId) => {
+  try {
+    const response = await axios.post(BASE_URL + "pin-code/get-by-city", {
+      cityId,
+    });
+    return response;
+  } catch (error) {
+    console.error("Error fetching pincodes by city:", error);
+    throw error;
+  }
+};
+
+//area api
+
+export const getAreaServ = async (formData) => {
+  try {
+    const response = await axios.post(BASE_URL + "area/list", formData);
+    return response;
+  } catch (error) {
+    console.error("Error fetching area list:", error);
+    throw error;
+  }
+};
+
+
+//product review
+
+export const addReviewServ = async (payload) => {
+  try {
+    console.log(payload)
+    const response = await axios.post(BASE_URL + "rating/create", payload);
+    return response.data;
+  } catch (error) {
+    console.error("review error:", error);
+    throw error;
+  }
+};

@@ -91,16 +91,17 @@ const Page = () => {
     let filtered = products;
 
 
-   if(selectedCategory !== "All"){
-        filtered = filtered.filter((p) =>
-    selectedCategory &&
-    p.categoryId &&
-    p.categoryId.some(
-      (cat) =>
-        cat.name &&
-        cat.name === selectedCategory
-    ));
-   }
+  if (selectedCategory !== "All") {
+  const matchedCategory = categories.find(cat => cat.name === selectedCategory);
+
+  if (matchedCategory) {
+    filtered = filtered.filter((p) =>
+      Array.isArray(p.categoryId) &&
+      p.categoryId.includes(matchedCategory._id)
+    );
+  }
+}
+
 
    console.log("select category" + selectedCategory);
    console.log("filtered product" + filtered);
@@ -164,11 +165,11 @@ const Page = () => {
     <>
       <Navbar/>
       <div className="shop-page">
-        <div className="shop-sections d-flex flex-md-nowrap flex-wrap">
+        <div className="shop-sections d-flex flex-lg-nowrap flex-wrap">
           {/* MOBILE: Filter Toggle Button */}
-          <div className="d-md-none mb-3">
+          <div className="d-lg-none mb-3  d-flex" style={{justifySelf:"self-start"}}>
             <button
-              className="btn btn-outline-danger"
+              className="btn btn-outline-danger " 
               onClick={() => setShowMobileFilter(true)}
             >
               <img
