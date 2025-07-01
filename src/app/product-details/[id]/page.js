@@ -194,18 +194,19 @@ function page() {
                     {details?.productVariants?.map((v, i) => {
                       return (
                         <div
-                          className="varientDiv mb-2 "
+                          className="varientDiv  mb-2 "
                           style={{ cursor: "pointer" }}
                           onClick={() => setSelectedVariant(v)}
                         >
                           <div
-                            className="d-flex me-2"
+                            className="d-flex me-2 shadow-sm"
                             style={{
                               border:
                                 selectedVariant?._id == v?._id
                                   ? "2px solid green"
                                   : "none",
                               borderRadius: "10px",
+                              background:"whitesmoke"
                             }}
                           >
                             <div className="  py-0 ">
@@ -217,7 +218,7 @@ function page() {
                                   borderRadius: "10px 10px 0px 0px",
                                 }}
                               />
-                              <div className="p-1">
+                              <div className="p-1 px-2">
                                 <p className="mb-0">{v?.variantValue}</p>
                                 <p className="mb-0">
                                   Price : <s>{v?.variantPrice}</s>:{" "}

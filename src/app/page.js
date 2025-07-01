@@ -9,7 +9,7 @@ import Faq from "./Components/Faq";
 import ShopFromFarm from "./Components/ShopFromFarm";
 import Footer from "./Components/Footer";
 import HeroSection from "./Components/HeroSection";
-import { getProductServ, getCategory } from "./services/product.service";
+import { getProductServ, getCategory, getComboProductServ } from "./services/product.service";
 import ProductSlider from "./Components/ProductSlider";
 import InfoContainer from "./Components/InfoContainer";
 import FooterNav from "./Components/FooterNav";
@@ -27,6 +27,15 @@ export default function Home() {
       }
     } catch (error) {}
   };
+   const [comboProductlist, setComboProductList] = useState([]);
+  const getComboProductList = async () => {
+    try {
+      let response = await getComboProductServ();
+      if (response?.statusCode == "200") {
+        setComboProductList(response?.data);
+      }
+    } catch (error) {}
+  };
   const [categorylist, setCategoryList] = useState([]);
   const getCategoryList = async () => {
     try {
@@ -40,6 +49,7 @@ export default function Home() {
   useEffect(() => {
     getProductList();
     getCategoryList();
+    getComboProductList();
   }, []);
   return (
     <>
@@ -71,7 +81,7 @@ export default function Home() {
       <BlogSlider />
       <ComboProductSlider  title="Combo Packs"
         subTitle="Look out our latest combo"
-        productList={productlist}/>
+        productList={comboProductlist}/>
       <Faq />
       <Footer />
 

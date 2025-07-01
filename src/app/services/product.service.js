@@ -16,6 +16,15 @@ export const getProductServ = async (payload) => {
     throw error; 
   }
 };
+export const getComboProductServ = async (payload) => {
+  try {
+    const response = await axios.post(BASE_URL + "combo-product/list", payload);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching product list:", error);
+    throw error; 
+  }
+};
 export const placeOrderServ = async (payload) => {
   try {
     const response = await axios.post(BASE_URL + "booking/create", payload);

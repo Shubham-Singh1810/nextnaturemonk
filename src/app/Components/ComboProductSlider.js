@@ -40,6 +40,7 @@ function ComboProductSlider({title, subTitle, productList, textAlignCenter}) {
       }
     ]
   };
+  
   return (
     <div style={{background:"#353535"}}>
 <div className="container py-3 py-md-5 productSliderDiv" >

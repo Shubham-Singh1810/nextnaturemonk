@@ -1,12 +1,12 @@
 "use client";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { addToCartServ } from "../services/product.service";
 import { toast } from "react-toastify";
 import { LoggedDataContext } from "../context/Context";
 
 function ComboProductCard({ value, showEdge }) {
-  const { loggedUserData, cartList, setCartList, wishList, setWishList } =
+  const { loggedUserData, cartList, setCartList, comboCartList, setComboCartList, wishList, setWishList } =
     useContext(LoggedDataContext);
   const router = useRouter();
 
@@ -28,22 +28,22 @@ function ComboProductCard({ value, showEdge }) {
     }
   };
 
-  const handleAddToCartLocal = (e, v) => {
+  const handleAddToCartComboLocal = (e, v) => {
     e.preventDefault();
     e.stopPropagation();
     try {
-      let localCartList = JSON.parse(localStorage.getItem("cartList")) || [];
+      let localComboCartList = JSON.parse(localStorage.getItem("comboCartList")) || [];
 
-      const existingProduct = localCartList.find((item) => item._id === v._id);
+      const existingProduct = localComboCartList.find((item) => item._id === v._id);
 
       if (existingProduct) {
         existingProduct.quantity += 1;
       } else {
-        localCartList.push({ ...v, quantity: 1 });
+        localComboCartList.push({ ...v, quantity: 1 });
       }
 
-      localStorage.setItem("cartList", JSON.stringify(localCartList));
-      setCartList(localCartList);
+      localStorage.setItem("comboCartList", JSON.stringify(localComboCartList));
+      setCartList(localComboCartList);
       toast.success("Item Added To the cart");
     } catch (error) {
       console.log("Something went wrong", error);
@@ -81,32 +81,32 @@ function ComboProductCard({ value, showEdge }) {
   const handleIncreaseQty = (e, v) => {
     e.preventDefault();
     e.stopPropagation();
-    let localCartList = JSON.parse(localStorage.getItem("cartList")) || [];
+    let localComboCartList = JSON.parse(localStorage.getItem("comboCartList")) || [];
 
-    const existingProduct = localCartList.find((item) => item._id === v._id);
+    const existingProduct = localComboCartList.find((item) => item._id === v._id);
     if (existingProduct) {
       existingProduct.quantity += 1;
     }
 
-    localStorage.setItem("cartList", JSON.stringify(localCartList));
-    setCartList(localCartList);
+    localStorage.setItem("comboCartList", JSON.stringify(localComboCartList));
+    setComboCartList(localComboCartList);
   };
 
   const handleDecreaseQty = (e, v) => {
     e.preventDefault();
     e.stopPropagation();
-    let localCartList = JSON.parse(localStorage.getItem("cartList")) || [];
+    let localComboCartList = JSON.parse(localStorage.getItem("comboCartList")) || [];
 
-    const existingProduct = localCartList.find((item) => item._id === v._id);
+    const existingProduct = localComboCartList.find((item) => item._id === v._id);
     if (existingProduct) {
       existingProduct.quantity -= 1;
       if (existingProduct.quantity <= 0) {
-        localCartList = localCartList.filter((item) => item._id !== v._id);
+        localComboCartList = localComboCartList.filter((item) => item._id !== v._id);
       }
     }
 
-    localStorage.setItem("cartList", JSON.stringify(localCartList));
-    setCartList(localCartList);
+    localStorage.setItem("comboCartList", JSON.stringify(localComboCartList));
+    setComboCartList(localComboCartList);
   };
 
   return (
@@ -115,12 +115,21 @@ function ComboProductCard({ value, showEdge }) {
       style={{ borderRadius: "12px" }}
       onClick={() => router.push("/product-details/" + value?._id)}
     >
-      {showEdge && <div className="d-flex justify-content-center">
-        <div className="upperCircle"></div>
-      </div>}
-      
+      {showEdge && (
+        <div className="d-flex justify-content-center">
+          <div className="upperCircle"></div>
+        </div>
+      )}
+
       <div className="d-flex justify-content-between align-items-center heartIcon pe-2">
-        <h6 className="badge border bg-danger m-2">Save 12 %</h6>
+        <h6 className="badge border bg-danger m-2">
+          Save{" "}
+          {(
+            ((value?.price - value?.discountedPrice) / value?.price) *
+            100
+          ).toFixed(2)}{" "}
+          %
+        </h6>
         <img
           onClick={(e) => handleAddToWishListLocal(e, value)}
           src={
@@ -147,17 +156,21 @@ function ComboProductCard({ value, showEdge }) {
         </div>
       </div>
       <div className="p-2" style={{ display: "flex", flexWrap: "wrap" }}>
-        {[1, 2, 3, 4]?.map((v, i) => {
-          return (
-            <div className="comboProductNames p-1 px-2 border me-2 mb-2">
-              Handwash
-            </div>
-          );
-        })}
+        {value?.productList?.slice(0, 2).map((v, i) => (
+          <div key={i} className="comboProductNames p-1 px-2 border me-2 mb-2">
+            {v?.productId?.name} : {v?.quantity}
+          </div>
+        ))}
+
+        {value?.productList?.length > 2 && (
+          <div className="comboProductNames p-1 px-2 border me-2 mb-2">
+            +{value?.productList?.length - 2} more
+          </div>
+        )}
       </div>
 
       <div className="d-flex justify-content-around align-items-center px-2 pb-3">
-        {cartList?.find((item) => item._id === value._id) ? (
+        {comboCartList?.find((item) => item._id === value._id) ? (
           <div className="d-flex counterDiv ">
             <p
               style={{ borderColor: "red" }}
@@ -165,7 +178,7 @@ function ComboProductCard({ value, showEdge }) {
             >
               -
             </p>
-            <p>{cartList.find((item) => item._id === value._id)?.quantity}</p>
+            <p>{comboCartList.find((item) => item._id === value._id)?.quantity}</p>
             <p
               style={{ borderColor: "green" }}
               onClick={(e) => handleIncreaseQty(e, value)}
@@ -175,16 +188,18 @@ function ComboProductCard({ value, showEdge }) {
           </div>
         ) : (
           <button
-            onClick={(e) => handleAddToCartLocal(e, value)}
+            onClick={(e) => handleAddToCartComboLocal(e, value)}
             className="bg-danger"
           >
             Add To Cart
           </button>
         )}
       </div>
-      {showEdge && <div className="d-flex justify-content-center">
-        <div className="lowerCircle"></div>
-      </div>}
+      {showEdge && (
+        <div className="d-flex justify-content-center">
+          <div className="lowerCircle"></div>
+        </div>
+      )}
     </div>
   );
 }

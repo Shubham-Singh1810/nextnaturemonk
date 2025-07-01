@@ -10,6 +10,7 @@ export const LoggedDataProvider = ({ children }) => {
   const [loggedUserData, setLoggedUserData] = useState(null); // Store user data
   const [productList, setProductList] = useState(null); 
   const [cartList, setCartList] = useState(null); 
+  const [comboCartList, setComboCartList] = useState(null); 
   const [wishList, setWishList] = useState(null); 
 
   // Function to update user data globally and persist it in localStorage
@@ -43,6 +44,14 @@ export const LoggedDataProvider = ({ children }) => {
     setCartList([]);
   }
 }, []);
+useEffect(() => {
+  const storedComboCartList = localStorage.getItem("comboCartList");
+  if (storedComboCartList) {
+    setComboCartList(JSON.parse(storedComboCartList));
+  } else {
+    setComboCartList([]);
+  }
+}, []);
  useEffect(() => {
   const storedWishList = localStorage.getItem("wishList");
   if (storedWishList) {
@@ -53,7 +62,7 @@ export const LoggedDataProvider = ({ children }) => {
 }, []);
 
   return (
-    <LoggedDataContext.Provider value={{setWishList, wishList, cartList, setCartList, loggedUserData, updateLoggedUserData, setProductList:setProductList, productList:productList }}>
+    <LoggedDataContext.Provider value={{setWishList, wishList, cartList, setCartList, comboCartList, setComboCartList, loggedUserData, updateLoggedUserData, setProductList:setProductList, productList:productList }}>
       {children}
     </LoggedDataContext.Provider>
   );
