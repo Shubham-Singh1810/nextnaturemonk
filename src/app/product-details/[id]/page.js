@@ -102,6 +102,56 @@ function page() {
       console.log("Something went wrong", error);
     }
   };
+
+  const [showReviewPopup, setReviewPopup] = useState(false);
+  // review api
+
+  const [form, setForm] = useState({
+    rating: "",
+    review: "",
+  });
+
+  const handleRatingChange = (e) => {
+    setForm((prev) => ({ ...prev, rating: e.target.value }));
+  };
+
+  const handleReviewTextChange = (e) => {
+    setForm((prev) => ({ ...prev, review: e.target.value }));
+  };
+
+  const [reviewProductId, setReviewProductId] = useState("");
+
+  const handleSubmitReview = async () => {
+    console.log("Review Form:", form);
+
+    const payload = {
+      rating: form.rating,
+      review: form.review,
+      userId: loggedUserData?._id,
+      productId: reviewProductId,
+    };
+
+    try {
+      const res = await addReviewServ(payload);
+      console.log(res);
+
+      if (res?.statusCode == "200") {
+        toast.success(res?.message);
+      }
+      setReviewPopup(false);
+    } catch (error) {
+      console.error("Error fetching addresses:", error);
+      toast.error(error?.response?.data?.message);
+    }
+  };
+
+  const handleReviewShow = (id) => {
+    setReviewPopup(true);
+    setReviewProductId(id);
+    console.log("product id", reviewProductId);
+  };
+  
+  //review add 
   return (
     <div>
       <Navbar selectedItem="Shop" />
@@ -455,9 +505,14 @@ function page() {
               <div className="productDetailsDiv mt-3 row">
                 <div className="col-12 border">
                   <div className="  p-2">
-                    <h3 className="mb-0">Peopls Thought's</h3>
+                   <div className="d-flex justify-content-between">
+                     <h3 className="mb-0">Peopls Thought's</h3>
+                    <button className="btn btn-danger" style={{height:"35px" , fontFamily:"poppins"}} >+ Add Review</button>
 
+                   </div>
                     <div className="row">
+                     
+                      
                       {ratingList?.map((v, i) => {
                         return (
                           <div className="col-lg-6 col-12">

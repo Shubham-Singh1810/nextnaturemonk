@@ -40,11 +40,11 @@ const page = () => {
 
   return (
     <>
-      <Navbar />
+      <Navbar selectedItem="Contact" />
       <div className="contact-page d-flex flex-column align-items-center">
         <div className="contact-head d-flex flex-column align-items-center ">
           <h1>Contact Us</h1>
-          <p>
+          <p className="text-center">
             Reach out to us for any inquiries, feedback, or support. Our team is
             ready to assist you.
           </p>

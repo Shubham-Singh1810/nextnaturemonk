@@ -163,7 +163,7 @@ const Page = () => {
 
   return (
     <>
-      <Navbar/>
+      <Navbar selectedItem="Shop" />
       <div className="shop-page">
         <div className="shop-sections d-flex flex-lg-nowrap flex-wrap">
           {/* MOBILE: Filter Toggle Button */}

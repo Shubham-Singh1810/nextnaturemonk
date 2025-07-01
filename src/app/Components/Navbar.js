@@ -36,7 +36,7 @@ const Navbar = ({ selectedItem }) => {
     },
     {
       name: "Combo Packs",
-      link: "/shop",
+      link: "/combo-products",
     },
     {
       name: "Bulk Order",
@@ -52,7 +52,7 @@ const Navbar = ({ selectedItem }) => {
     },
      {
       name: "Contact",
-      link: "/blogs",
+      link: "/contact",
     },
     
   ];

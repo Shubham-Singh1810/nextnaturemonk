@@ -2466,7 +2466,7 @@ policy css */
 }
 
 .contact-main {
-  background-color: #ecf0ef;
+  background-color: #f2f2f2;
   padding: 5%;
 }
 
@@ -2474,7 +2474,10 @@ policy css */
   .contact-main {
     flex-direction: column;
   }
-
+   .contact-head {
+ 
+  margin-bottom: 0px;
+}
   .contact-form {
     width: 100%;
   }
@@ -2493,7 +2496,7 @@ policy css */
     width: 40%;
   }
 }
-@media (max-width: 500px) {
+@media (max-width: 600px) {
   .contact-detail {
     width: 90%;
   }
@@ -2520,7 +2523,7 @@ policy css */
 
 .user-profile {
   background-color: #f7f8fa;
-  padding: 7% 7%;
+  padding: 4% 7%;
   min-height: 100vh;
   height: 100%;
 }
@@ -2891,6 +2894,8 @@ policy css */
   color: gray;
   font-size: 25px;
 }
+
+
 .categoryCard img {
   height: 160px;
   width: 160px;
@@ -3384,4 +3389,53 @@ text-align: center;
 .productImage:hover {
   transform: scale(1.05);
   cursor: pointer;
+}
+
+/* combo page */
+.comboContainer {
+  position: relative;
+  background-color: #bb3e3e;
+ 
+  border-top-left-radius: 100% 200px;
+  border-top-right-radius: 100% 200px;
+  /* overflow: hidden; */
+}
+
+/* Optional inner margin for curve effect */
+.comboInner {
+  margin-top: -11%;
+}
+
+/* Responsive  */
+@media (max-width: 1024px) {
+  .comboContainer {
+    border-top-left-radius: 100% 120px;
+    border-top-right-radius: 100% 120px;
+  }
+
+  .comboInner {
+    margin-top: -16%;
+  }
+}
+
+@media (max-width: 746px) {
+  .comboContainer {
+    border-top-left-radius: 100% 90px;
+    border-top-right-radius: 100% 90px;
+  }
+
+  .comboInner {
+    margin-top: -16%;
+  }
+}
+
+@media (max-width: 546px) {
+  .comboContainer {
+    border-top-left-radius: 100% 30px;
+    border-top-right-radius: 100% 30px;
+  }
+
+  .comboInner {
+    margin-top: -50%;
+  }
 }
