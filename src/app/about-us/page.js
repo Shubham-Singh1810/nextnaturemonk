@@ -74,10 +74,10 @@ const page = () => {
               and taste the difference for yourself. You won’t regret it!
             </p>
           </div>
-          <div className="col-md-6 mt-auto col-12 px-0 px-md-2">
+          <div className="col-md-6  col-12 px-0 px-md-2">
             <img
-              src="https://gustosafoods.com/wp-content/uploads/2024/03/Gustosa-Foods-Office-3-min.jpg"
-              className="img-fluid"
+              src={slides?.find((v) => v?.category === "About Hero Image")?.image}
+              className="img-fluid w-100"
             />
           </div>
         </div>

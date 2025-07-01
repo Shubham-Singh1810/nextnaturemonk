@@ -35,20 +35,24 @@ const Navbar = ({ selectedItem }) => {
       link: "/shop",
     },
     {
+      name: "Combo Packs",
+      link: "/shop",
+    },
+    {
       name: "Bulk Order",
       link: "/bulk-order",
     },
     {
-      name: "Combo Packs",
-      link: "/combo-products",
+      name: "About",
+      link: "/about-us",
     },
     {
       name: "Blogs",
       link: "/blogs",
     },
-    {
-      name: "About",
-      link: "/about-us",
+     {
+      name: "Contact",
+      link: "/blogs",
     },
     
   ];
