@@ -11,7 +11,7 @@ function FeaturedCarousel({ categorylist }) {
           {categorylist?.map((v, i) => {
             return (
               <div className="col-4 col-md-3 col-lg-2">
-                <div className="categoryCard text-center">
+                <div className="categoryCard text-center ">
                   <img src={v?.image} />
                   <p>{v?.name}</p>
                 </div>

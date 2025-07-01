@@ -266,7 +266,7 @@ function ProductCard({ value, bgColor, borderRadius, innerHeight, height }) {
       onClick={() => router.push("/product-details/" + value?._id)}
     >
       <div className="d-flex justify-content-between align-items-center heartIcon pe-2  position-absolute " style={{zIndex:"99"}} >
-       <h6 className="badge  text-white  bg-danger p-sm-2 ">
+       <h6 className="badge  text-white  bg-success p-sm-2 ">
   {value?.categoryId?.length > 0 ? value.categoryId[0].name : "Category"}
 </h6>
 
@@ -349,8 +349,8 @@ function ProductCard({ value, bgColor, borderRadius, innerHeight, height }) {
           {cartList?.find((item) => item._id === value._id) ? (
             <div className="d-flex counterDiv  w-100">
               <p
-                style={{ backgroundColor: "rgb(233, 42, 42)" }}
-                className="w-100 text-white"
+                
+                className="w-100 text-white bg-secondary"
                 onClick={(e) => handleDecreaseQty(e, value)}
               >
                 -
@@ -359,15 +359,15 @@ function ProductCard({ value, bgColor, borderRadius, innerHeight, height }) {
                 {cartList.find((item) => item._id === value._id)?.quantity}
               </p>
               <p
-                className="w-100 text-white"
-                style={{ backgroundColor: "rgb(233, 42, 42)" }}
+                className="w-100 text-white bg-success"
+               
                 onClick={(e) => handleIncreaseQty(e, value)}
               >
                 +
               </p>
             </div>
           ) : (
-            <button onClick={(e) => handleAddToCartLocal(e, value)}>
+            <button className="bg-success" onClick={(e) => handleAddToCartLocal(e, value)}>
               {" "}
               Add To Cart{" "}
             </button>

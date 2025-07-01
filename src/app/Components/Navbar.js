@@ -191,7 +191,8 @@ const Navbar = ({ selectedItem }) => {
         {/* 🔷 Logo */}
         <div className="logo">
           <Link href="/">
-            <img src="/assets/logo.jpeg" alt="logo" className="logo-img" />
+            
+            <img src="/assets/brandName.png" alt="logo" className="logo-img" />
           </Link>
         </div>
         <ul
@@ -203,7 +204,7 @@ const Navbar = ({ selectedItem }) => {
                 <Link
                   href={v?.link}
                   style={{
-                    color: selectedItem == v?.name ? "#DB301F" : "#000",
+                    color: selectedItem == v?.name ? "green" : "#000",
                     opacity: selectedItem == v?.name ? "1" : "0.6",
                     fontWeight: selectedItem == v?.name ? "600" : "400",
                   }}

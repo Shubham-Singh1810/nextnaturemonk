@@ -10,10 +10,10 @@ const Footer = () => {
         <div className="footer-inner d-flex  gap-4">
           <div className="footer-1 footer-item">
             <img
-              src="/assets/logo.jpeg"
+              src="/assets/brandName.png"
               alt="logo"
-              className="img-fluid "
-              style={{height:"80px", borderRadius:"4px"}}
+              className="img-fluid bg-light px-3 py-1"
+              style={{height:"50px", borderRadius:"4px"}}
             />
             <p className="text-white mt-4">
             We’re passionate about creating effective and gentle hygiene products that enhance your

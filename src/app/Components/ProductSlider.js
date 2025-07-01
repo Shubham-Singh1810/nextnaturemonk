@@ -41,7 +41,7 @@ function ProductSlider({title, subTitle, productList, textAlignCenter}) {
   };
   return (
     <div className="container py-3 py-md-5 productSliderDiv">
-      <h1 className={textAlignCenter  ? " text-center" :" "}>{title}</h1>
+      <h1 className={textAlignCenter  ? " text-center" :" " + " text-success"}>{title}</h1>
       <h5 className={textAlignCenter  ? " text-center" :" "}>{subTitle}</h5>
       <div className="row py-3">
         <Slider {...settings}>
